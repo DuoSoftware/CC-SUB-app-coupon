@@ -1,0 +1,274 @@
+<div id="promomail" class="page-layout carded left-sidenav" layout="row" ng-switch="vm.appInnerState">
+  <meta name="updatedBy" content="Ishara">
+  <meta name="owner" content="Ishara">
+  <meta name="modifiedDate" content="2017-04-20">
+  <meta name="version" content="6.1.0.1">
+  <meta name="app" content="coupon">
+  <meta name="view" content="coupon.html">
+  <!-- TOP BACKGROUND -->
+  <div class="top-bg md-accent-bg"></div>
+  <!-- / TOP BACKGROUND -->
+
+  <!-- SIDENAV -->
+  <md-sidenav class="sidenav" md-is-locked-open="$mdMedia('gt-md')" md-component-id="main-sidenav"
+
+              ng-include="'app/main/coupon/sidenavs/main/main-sidenav.html'" ms-scroll ms-sidenav-helper>
+  </md-sidenav>
+  <!-- / SIDENAV -->
+
+  <!-- CENTER -->
+  <div ng-switch-when="default" class="center" layout="column" flex>
+    <!-- CONTENT HEADER -->
+    <div class="header" layout="row" layout-align="start center" ng-if="vm.activeCouponPaneIndex==0">
+
+      <div class="search-wrapper md-whiteframe-4dp" layout="row" layout-align="start center" flex>
+        <md-button class="md-icon-button sidenav-toggle" ng-click="vm.toggleSidenav('main-sidenav')" hide-gt-md
+                   aria-label="Toggle Sidenav">
+          <md-icon class="icon" md-font-icon="icon-menu"></md-icon>
+        </md-button>
+
+        <div class="search" flex layout="row" layout-align="start center">
+          <md-icon md-font-icon="icon-magnify" class="icon s24"></md-icon>
+          <input flex ng-model="vm.search" type="text" placeholder="Search for coupon" ng-change="SearchByKeyword()">
+        </div>
+      </div>
+
+    </div>
+    <!-- / CONTENT HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content-card" layout="column" flex>
+
+      <!-- INVOICE VIEW PANE TOOLBAR -->
+      <div class="toolbar" layout="row" layout-align="space-between center" ng-if="vm.activeCouponPaneIndex === 1" style="height: 44px;">
+        <md-button class="md-icon-button"
+                   ng-click="closeReadPane()"
+                   aria-label="Back">
+          <md-icon md-font-icon="icon-keyboard-backspace"></md-icon>
+        </md-button>
+      </div>
+      <!-- / INVOICE VIEW PANE TOOLBAR -->
+
+      <!-- CONTENT TOOLBAR -->
+      <div class="toolbar list-header" ng-if="vm.activeCouponPaneIndex === 0">
+
+        <div layout="row" flex layout-align="start center" style="padding-left: 0px;">
+          <div class="info" flex layout="row" style="height: 40px">
+
+            <!--<div class="prodMainInfo" layout="column" layout-align="center start" style="width: 190px;">-->
+            <div class="promoMainInfo" layout="column" layout-align="center start" flex>
+              Coupon
+            </div>
+
+            <div class="date" class="prodMainInfo topMargin" flex layout="column" layout-align="center start">
+              Start Date
+            </div>
+
+            <div class="date" flex layout="column" layout-align="center start">
+              End Data
+            </div>
+
+            <div class="date" flex="20" layout="column" layout-align="center start">
+              Occurrences
+            </div>
+
+            <div class="date" class="prodMainInfo topMargin" flex="10" layout="column" layout-align="center start">
+              Status
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+      <!-- / CONTENT TOOLBAR -->
+      <!-- CONTENT WRAPPER -->
+      <div class="content-wrapper" layout="row" flex>
+
+        <md-tabs md-selected="vm.activeCouponPaneIndex" class="promomail-tabs"  md-dynamic-height="{{vm.dynamicHeight}}" flex>
+          <!-- INVOICE LIST PANE -->
+          <md-tab>
+            <!--<md-tab-label>Coupon | Start date | End date | No of occurence | Status</md-tab-label>-->
+            <md-tab-body>
+              <div class="preloader" layout="row" layout-sm="column" layout-align="space-around" ng-hide="vm.listLoaded">
+                <md-progress-circular md-mode="indeterminate"></md-progress-circular>
+              </div>
+              <div class="content promomail-list-pane"
+                   ng-include="'app/main/coupon/views/list/list-view.html'" ms-scroll>
+              </div>
+            </md-tab-body>
+          </md-tab>
+          <!-- / INVOICE LIST PANE -->
+
+          <!-- INVOICE DISPLAY PANE -->
+          <md-tab>
+            <md-tab-body>
+              <div class="content coupon-display-pane"
+                   ng-include="'app/main/coupon/views/read/read-view.html'" id="editPromContainer" ms-scroll>
+              </div>
+            </md-tab-body>
+          </md-tab>
+          <!-- / INVOICE DISPLAY PANE -->
+        </md-tabs>
+
+      </div>
+      <!-- / CONTENT WRAPPER -->
+
+    </div>
+    <!-- / CONTENT CARD -->
+  </div>
+  <!-- / CENTER -->
+
+  <!-- CENTER -->
+  <div ng-switch-when="add" class="center" layout="column" flex>
+    <!-- CONTENT HEADER -->
+    <!-- / CONTENT HEADER -->
+
+    <!-- CONTENT CARD -->
+    <div class="content-card" layout="column" flex>
+      <!-- / CONTENT TOOLBAR -->
+
+      <!-- CONTENT WRAPPER -->
+      <div class="content-wrapper" flex>
+        <md-content style="height: 100%;" ms-scroll>
+
+          <form name="vm.couponAdd" ng-submit="submit()" id="couponForm" novalidate>
+            <!--CREATE NEW INVOICE _ CARDED=================================================-->
+            <md-card flex class="input-block-gen">
+              <md-card-title>
+                <div layout="row" layout-align="start center">
+                  <md-icon md-font-icon="icon-cog"></md-icon> <h3>General Details</h3>
+                </div>
+              </md-card-title>
+              <md-card-content>
+                <div layout="row">
+                  <md-input-container flex="30">
+                    <label>Coupon Code</label>
+                    <input ng-required="true" minlength="null"  md-maxlength="null" type="" name="couponCode" ng-pattern="" ng-model="content.couponcode" ng-maxlength="20">
+                    <div ng-messages="vm.couponAdd.couponCode.$error">
+                      <div ng-message="maxlength">Code must be between 1-20 characters</div>
+                    </div>
+                  </md-input-container>
+
+                  <div flex="5"></div>
+
+                  <md-input-container flex="20">
+                    <label>Discount</label>
+                    <input ng-required="true" minlength="null"  md-maxlength="null" type="number" min="1" name="couponDiscount" ng-pattern="" ng-model="content.couponDiscount" ng-maxlength="20">
+                    <div ng-messages="vm.couponAdd.couponDiscount.$error">
+                      <div ng-message="maxlength">Discount must be between 1-20 characters</div>
+                    </div>
+                  </md-input-container>
+
+                  <div flex="5"></div>
+
+                  <md-input-container flex="10">
+                    <md-select name="addDiscountType" required ng-model="content.discounttype">
+                      <md-option value="0" >Flat</md-option>
+                      <md-option value="1" >Percentage</md-option>
+                    </md-select>
+                  </md-input-container>
+
+                </div>
+
+                <div layout="row">
+
+                  <md-input-container flex="30">
+                    <label>Occurrences</label>
+                    <input ng-required="true" minlength="null" md-maxlength="null" type="number" min="1" max="1000000" name="default1" ng-pattern="" ng-model="content.noofoccurence">
+                    <div ng-messages="vm.couponAdd.default1.$error">
+                      <div ng-message="max">Occurrences must be between 1-7 digits</div>
+                      <div ng-message="min">Occurrences must be between 1-7 digits</div>
+                    </div>
+                  </md-input-container>
+
+                  <div flex="5"></div>
+
+                  <md-input-container flex="30" ng-hide="content.noRedemptionCount">
+                    <label>Redemption</label>
+                    <input ng-required="!content.noRedemptionCount" minlength="null"  md-maxlength="null" type="number" name="couponRedemption" ng-pattern="" ng-model="content.couponRedemption" ng-maxlength="20">
+                    <div ng-messages="vm.couponAdd.couponRedemption.$error">
+                      <div ng-message="maxlength">Redemption must be between 1-20 characters</div>
+                    </div>
+                  </md-input-container>
+
+
+                  <div flex="5"></div>
+
+                  <div layout="row" layout-align="start center">
+                    <md-checkbox ng-model="content.noRedemptionCount" id="noRedemptionCount" name="noRedemptionCount" aria-label="noRedemptionCount" class="md-primary" style="margin: 0;">Apply forever</md-checkbox>
+                  </div>
+
+                </div>
+
+                <div layout="row" style="height: 95px;">
+                  <md-input-container flex="30">
+                    <label>Start Date</label>
+                    <md-datepicker ng-model="content.startdate" md-placeholder="Start date" >
+                    </md-datepicker>
+                  </md-input-container>
+
+                  <div flex="5"></div>
+
+                  <div flex="30" layout="row">
+                    <div layout="column" flex>
+                      <md-input-container style="margin: 16px 0 0 0;">
+                        <label>End Date</label>
+                        <md-datepicker ng-model="content.enddate" md-placeholder="End date" ng-required="!NoEndDate" ng-disabled="NoEndDate">
+                        </md-datepicker>
+                      </md-input-container>
+                      <!--<md-checkbox ng-click="clickNoEndDate(NoEndDate)" ng-checked="NoEndDate" id="noEndDateCheckBox" name="noEndDateCheckBox" aria-label="No End date" class="md-primary dep-checkbox">No End Date</md-checkbox>-->
+                    </div>
+                  </div>
+                </div>
+
+                <div layout="row" layout-align="start center" style="height: 50px;">
+                  <div layout="row" layout-align="start center">
+                    <md-checkbox ng-model="content.associateplan" id="applyToAll" name="applyToAll" aria-label="Apply to all" class="md-primary" style="margin: 0;">Apply to all</md-checkbox>
+                  </div>
+                </div>
+
+              </md-card-content>
+            </md-card>
+
+            <md-card flex class="input-block-gen" ng-hide="content.associateplan">
+              <md-card-title>
+                <div layout="row" layout-align="start center">
+                  <md-icon md-font-icon="icon-package"></md-icon> <h3>Plan Details</h3>
+                </div>
+              </md-card-title>
+              <md-card-content md-whiteframe="1dp">
+
+
+                <label ng-repeat="plan in planList" class="checkbox-inline">
+                  <input type="checkbox" name="selectedPlans[]" value="{{plan.guPlanID}}" ng-checked="couponPlan.indexOf(plan.guPlanID) > -1" ng-click="toggleSelection(plan.guPlanID)"> {{plan.code}}
+                </label>
+
+
+              </md-card-content>
+            </md-card>
+
+            <!--<div class="col-md-6">-->
+              <!--<h4>SelectedPlans</h4>-->
+              <!--<pre>{{couponPlan|json}}</pre>-->
+            <!--</div>-->
+            <!--CREATE NEW INVOICE _ CARDED=================================================-->
+          </form>
+
+        </md-content>
+        <div ng-init="submitted=false" layout="row" layout-align="space-between center" md-whiteframe="8dp" style="position: absolute;bottom: 0;width: 100%;background: #ffffff;z-index:9999;">
+          <div layout="row"></div>
+
+          <div layout="row" class="layout-row">
+            <md-button  ng-click="clearForm()">Clear</md-button>
+            <md-button ng-disabled="isSaveClicked" type="submit" form="couponForm" class="md-raised md-warn">Submit</md-button>
+          </div>
+        </div>
+      </div>
+      <!-- / CONTENT WRAPPER -->
+
+    </div>
+    <!-- / CONTENT CARD -->
+  </div>
+  <!-- / CENTER -->
+
+</div>

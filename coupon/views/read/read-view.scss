@@ -1,0 +1,262 @@
+#promomail {
+
+    .coupon-display-pane {
+        background: #FFFFFF;
+      .summary{
+        width:100%;
+        padding-left:24px;
+        padding-right:24px;
+        //border-top:1px solid rgba(0, 0, 0, 0.12);
+
+        .info_sup{
+          font-weight:700;
+          color:rgba(0,0,0,0.54);
+          padding:24px 0px 24px 0px;
+        }
+
+        .summary_list{
+          width:100%;
+
+          .sum_column{
+            >div{
+              width: 100%;
+            }
+
+            .column_cell{
+              width:100%;
+              padding:12px 0;
+              margin-bottom: 3px;
+              margin-right: 5px;
+
+              span:first-child{
+                /* font-weight: 500; */
+                /* text-transform: uppercase; */
+                color: rgba(0, 0, 0, 0.6);
+                padding-left: 13px;
+              }
+
+              md-input-container{
+                margin-top: 0px;
+                margin-bottom: 0px;
+                width: 100%;
+                position: relative;
+                top: 10px;
+              }
+              md-select-value, md-checkbox{
+                span{
+                  text-transform: capitalize!important;
+                  color: #000!important;
+                  font-weight: normal!important;
+                }
+              }
+            }
+
+            >div:nth-child(odd) .column_cell{
+              background: rgba(33,150,243,0.03);
+            }
+          }
+        }
+      }
+      .rel{
+        position: relative;
+        .preloader-dot-auto{
+          height: 10px;
+          position: absolute;
+          right: 0;
+          bottom: 36px;
+          img{
+            width: 40px;
+          }
+        }
+      }
+      .carded-list-wrap{
+        md-card-header{
+          padding: 16px;
+          md-card-header-text{
+            font-weight: 400;
+            color: #aaaaaa;
+          }
+        }
+        md-content{
+          max-height: 350px;
+          //min-height: 350px;
+          overflow-x:hidden;
+          .no-sched{
+            color: #aaa;
+            font-weight: 300;
+            md-icon{
+              color: #aaa;
+            }
+          }
+        }
+        .carded-list-row{
+          padding: 16px;
+          height: 53px;
+
+          &:not(:last-child){
+            background: rgba(204, 204, 204, 0.08);;
+            border-bottom: solid 1px rgba(204, 204, 204, 0.28);;
+          }
+          .stop-btn{
+            min-width: auto;
+            min-height: auto;
+            width: 50px;
+            height: 25px;
+            font-size: 12px;
+            margin-right: 0px;
+            span{
+              position: relative;
+              top: -5px;
+            }
+          }
+        }
+      }
+
+      .read-view-tabs{
+        md-tabs-wrapper {
+          display: block!important;
+          .md-tab{
+            //float:none;
+          }
+        }
+
+        md-tabs-content-wrapper {
+          top: auto!important;
+        }
+      }
+
+      .bottom-fixed-bar{
+        //position: absolute;
+        //bottom: 0px;
+        width: 100%;
+        border-top: solid 1px #cccccc;
+        padding-top: 10px;
+        //width: 100%;
+        //padding: 16px;
+        //background: #FFFFFF;
+        //z-index: 9999;
+      }
+
+        .coupon-header {
+            padding:40px 16px 20px 16px;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+
+            .summary {
+
+                .name{
+                    font-size: 18px;
+                    font-weight: 500;
+                }
+
+                .code{
+                    font-size: 13px;
+                    font-weight:400;
+                }
+            }
+          .status{
+            .pill{
+              display: inline-block;
+              padding: 3px 6px;
+              border-radius: 3px;
+              color: #fff;
+              margin-right: 20px;
+            }
+            .Active{
+              background-color: limegreen;
+            }
+            .Inactive{
+              background-color: #CCCCCC;
+            }
+            .Expired{
+              background-color: orange;
+            }
+          }
+
+            .cost{
+                .value{
+                    font-size:28px;
+                    font-weight:300;
+                    color:rgb(3,155,229);
+                }
+
+                .note{
+                    font-size: 13px;
+                    font-weight:400;
+                }
+            }
+        }
+
+        .coupon-content {
+            //padding: 24px 0;
+
+            .image{
+                width:100%;
+                img{
+                    max-width:100%;
+                    height:auto;
+                }
+            }
+
+            .info {
+                width:100%;
+
+                .summary{
+                    width:100%;
+                    padding-left:24px;
+                    padding-right:24px;
+                    border-top:1px solid rgba(0, 0, 0, 0.12);
+
+                    .info_sup{
+                        font-weight:700;
+                        color:rgba(0,0,0,0.54);
+                        //padding:24px 0px 24px 0px;
+                    }
+
+                    .summary_list{
+                        width:100%;
+
+                        .sum_column{
+
+                            .column_cell{
+                                width:100%;
+                                padding-bottom:24px;
+
+
+                                span:first-child{
+                                  //text-transform: uppercase;
+                                  font-weight: 500;
+                                }
+
+                                span:last-child{
+                                    font-weight:500;
+                                    color:rgba(0,0,0,0.75);
+                                }
+                            }
+
+                            .column_cell:last-child{
+                                padding-bottom:none;
+                            }
+                        }
+                    }
+                }
+
+                .description{
+                    width:100%;
+                    padding-left:24px;
+                    padding-right:24px;
+                    border-top:1px solid rgba(0, 0, 0, 0.12);
+
+                    .info_sup{
+                        font-weight:700;
+                        color:rgba(0,0,0,0.54);
+                        padding:24px 0px 0px 0px;
+                    }
+                }
+
+            }
+        }
+
+
+
+    }
+}

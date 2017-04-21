@@ -1,0 +1,98 @@
+<!-- SIDENAV HEADER -->
+<div class="header" layout="column" layout-align="space-between start">
+
+    <div class="logo" layout="row" layout-align="start center">
+        <span class="logo-icon">
+            <img src="app/core/app_icons/coupon_app_icon.png" alt=""/>
+        </span>
+        <span class="logo-text">Coupon</span>
+    </div>
+
+</div>
+<!-- / SIDENAV HEADER -->
+
+<!-- SIDENAV CONTENT -->
+<md-content ms-scroll class="content" flex>
+
+    <div class="compose-button">
+        <md-button ng-if="vm.activeCouponPaneIndex == 0" class="md-accent md-raised" aria-label="compose"
+              ng-click="changeView()">{{vm.addButtonDisplayText}}
+        </md-button>
+
+      <md-button ng-if="vm.activeCouponPaneIndex == 1" class="md-accent md-raised" aria-label="compose"
+                 ng-click="toggleEdit(toggleControllText)" ng-hide="readPaneOn;
+">{{toggleControllText}}
+      </md-button>
+    </div>
+
+    <!--<div class="navigation-simple" layout="column" ng-if="vm.appInnerState == 'default' && vm.activeCouponPaneIndex == 0">-->
+        <!--<md-button class="item" aria-label="inbox" ng-click="loadCouponByType('0')">-->
+            <!--<div layout="row" layout-align="start center">-->
+                <!--<md-icon md-font-icon="icon-inbox" class="s16"></md-icon>-->
+                <!--<span class="title">All Coupons</span>-->
+            <!--</div>-->
+        <!--</md-button>-->
+
+        <!--<md-button class="item" aria-label="starred" ng-click="loadCouponByType('1')">-->
+            <!--<div layout="row" layout-align="start center">-->
+                <!--<md-icon md-font-icon="icon-star" class="s16"></md-icon>-->
+                <!--<span class="title" flex>Active Coupons</span>-->
+            <!--</div>-->
+        <!--</md-button>-->
+
+        <!--<md-button class="item" aria-label="important" ng-click="loadCouponByType('2')">-->
+            <!--<div layout="row" layout-align="start center">-->
+                <!--<md-icon md-font-icon="icon-alert-circle" class="s16"></md-icon>-->
+                <!--<span class="title" flex>Expired Coupons</span>-->
+            <!--</div>-->
+        <!--</md-button>-->
+
+        <!--&lt;!&ndash;<div class="item subheader">Adjustment Labels</div>&ndash;&gt;-->
+
+        <!--&lt;!&ndash;<md-button class="item" aria-label="label notes">&ndash;&gt;-->
+            <!--&lt;!&ndash;<div layout="row" layout-align="start center">&ndash;&gt;-->
+                <!--&lt;!&ndash;<md-icon md-font-icon="icon-label" class="s16 green-fg"></md-icon>&ndash;&gt;-->
+                <!--&lt;!&ndash;<span class="title">Smart Phone</span>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--&lt;!&ndash;</md-button>&ndash;&gt;-->
+
+        <!--&lt;!&ndash;<md-button class="item" aria-label="label paypal">&ndash;&gt;-->
+            <!--&lt;!&ndash;<div layout="row" layout-align="start center">&ndash;&gt;-->
+                <!--&lt;!&ndash;<md-icon md-font-icon="icon-label" class="s16 orange-fg"></md-icon>&ndash;&gt;-->
+                <!--&lt;!&ndash;<span class="title">Accessory</span>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--&lt;!&ndash;</md-button>&ndash;&gt;-->
+
+        <!--&lt;!&ndash;<md-button class="item" aria-label="label invoices">&ndash;&gt;-->
+            <!--&lt;!&ndash;<div layout="row" layout-align="start center">&ndash;&gt;-->
+                <!--&lt;!&ndash;<md-icon md-font-icon="icon-label" class="s16 blue-grey-fg"></md-icon>&ndash;&gt;-->
+                <!--&lt;!&ndash;<span class="title">Tab</span>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--&lt;!&ndash;</md-button>&ndash;&gt;-->
+
+        <!--&lt;!&ndash;<md-button class="item" aria-label="label amazon">&ndash;&gt;-->
+            <!--&lt;!&ndash;<div layout="row" layout-align="start center">&ndash;&gt;-->
+                <!--&lt;!&ndash;<md-icon md-font-icon="icon-label" class="s16 blue-fg"></md-icon>&ndash;&gt;-->
+                <!--&lt;!&ndash;<span class="title">Smart Watch</span>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--&lt;!&ndash;</md-button>&ndash;&gt;-->
+
+        <!--&lt;!&ndash;<md-divider></md-divider>&ndash;&gt;-->
+
+        <!--&lt;!&ndash;<md-button class="item" aria-label="settings">&ndash;&gt;-->
+            <!--&lt;!&ndash;<div layout="row" layout-align="start center">&ndash;&gt;-->
+                <!--&lt;!&ndash;<md-icon md-font-icon="icon-cog" class="s16"></md-icon>&ndash;&gt;-->
+                <!--&lt;!&ndash;<span class="title">Settings</span>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--&lt;!&ndash;</md-button>&ndash;&gt;-->
+
+        <!--&lt;!&ndash;<md-button class="item" aria-label="help">&ndash;&gt;-->
+            <!--&lt;!&ndash;<div layout="row" layout-align="start center">&ndash;&gt;-->
+                <!--&lt;!&ndash;<md-icon md-font-icon="icon-help" class="s16"></md-icon>&ndash;&gt;-->
+                <!--&lt;!&ndash;<span class="title">Help</span>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--&lt;!&ndash;</md-button>&ndash;&gt;-->
+    <!--</div>-->
+
+</md-content>
+<!-- / SIDENAV CONTENT -->
