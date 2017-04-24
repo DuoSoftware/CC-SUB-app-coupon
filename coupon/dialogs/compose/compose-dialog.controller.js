@@ -3,11 +3,11 @@
     'use strict';
 
     angular
-        .module('app.promotion')
-        .controller('AddPromotionController', AddPromotionController);
+        .module('app.coupon')
+        .controller('AddcouponController', AddcouponController);
 
     /** @ngInject */
-    function AddPromotionController($scope,$mdDialog, selectedMail,$charge,notifications,$state)
+    function AddcouponController($scope,$mdDialog, selectedMail,$charge,notifications,$state)
     {
         var vm = this;
 
@@ -24,7 +24,7 @@
 
 
 
-// promotion load skip and take
+// coupon load skip and take
       $scope.take = 100;
       $scope.skip = 0;
 
@@ -133,12 +133,12 @@
 
 
       $scope.submit = function() {
-        if ($scope.promotionAdd.$valid == true) {
+        if ($scope.couponAdd.$valid == true) {
 
           debugger;
           // main table details and promo product details
           $scope.content = {
-            "promotiontype": $scope.content.promotiontype,
+            "coupontype": $scope.content.coupontype,
             "amount": $scope.content.amount,
             "customerid": $scope.rows.customer.customerId,
             "note": $scope.content.note,
@@ -148,12 +148,12 @@
           }
 
           // Header deatil saves here.
-          $charge.promotion().store($scope.content).success(function (data) {
+          $charge.coupon().store($scope.content).success(function (data) {
             debugger;
             //alert(data.error);
             if (data.error == "00000") {
               //debugger;
-              notifications.toast("Record Saved, Promotion Added","success");
+              notifications.toast("Record Saved, coupon Added","success");
               //location.href = "#/main";
               $mdDialog.hide();
               $state.go($state.current, {}, {reload: true});

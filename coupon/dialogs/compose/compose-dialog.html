@@ -1,8 +1,8 @@
 <md-dialog class="compose-dialog" aria-label="New Message">
-    <form class="md-inline-form" name="promotionAdd" >
+    <form class="md-inline-form" name="couponAdd" >
         <md-toolbar class="md-accent md-hue-2">
             <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
-                <span class="title">New Promotion</span>
+                <span class="title">New Coupon</span>
                 <md-button class="md-icon-button" ng-click="vm.closeDialog()" aria-label="Close dialog">
                     <md-icon md-font-icon="icon-close"></md-icon>
                 </md-button>
@@ -46,7 +46,7 @@
 
               <md-input-container class="md-block" flex-gt-sm style="margin-left: -80px;">
                 <md-content layout="row" layout-align="space-between center" style="padding:10px;">
-                  <label>Promotion date</label>
+                  <label>Coupon date</label>
                   <input ng-required="true" ng-disabled="true" minlength="null" md-maxlength="null" type="" min="0" name="current date" ng-pattern="" ng-model="currentDate">
 
                 </md-content></md-input-container>
@@ -70,16 +70,16 @@
             <div layout-gt-sm="row">
               <md-input-container class="md-block" flex-gt-sm >
                 <!--<label>A</label>-->
-                <label>Promotion type</label>
-                <md-select  required ng-model="content.promotiontype" id="promotiontypeid" data-screen-name="promotiontypeid">
+                <label>Coupon type</label>
+                <md-select  required ng-model="content.coupontype" id="coupontypeid" data-screen-name="coupontypeid">
                   <!--<md-option  value="" ng-click="addCat()">Add Product</md-option>-->
-                  <md-option ng-repeat="value in adjTypes" value="{{value.aId}}" aria-selected="{{value.aId == clickRow.promotiontypeid}}">
+                  <md-option ng-repeat="value in adjTypes" value="{{value.aId}}" aria-selected="{{value.aId == clickRow.coupontypeid}}">
                     {{value.aType}}
                   </md-option>
                 </md-select>
-                <div ng-messages="promotionAdd.promotiontypeid.$error">
+                <div ng-messages="couponAdd.coupontypeid.$error">
                   <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
-                    Please select promotion type
+                    Please select coupon type
                   </div>
                 </div>
               </md-input-container>
@@ -89,11 +89,11 @@
 
 
               <md-input-container class="md-block" flex-gt-sm>
-                <label>Promotion amount</label>
+                <label>Coupon amount</label>
                 <input ng-required="true" ng-change="changeAmount()" minlength="null" md-maxlength="null" type="number" min="0" name="default1" ng-pattern="" ng-model="content.amount">
-                <div ng-messages="promotionAdd.default1.$error">
+                <div ng-messages="couponAdd.default1.$error">
                   <div ng-message-exp="['required', 'minlength', 'maxlength', 'pattern']">
-                    Please add promotion amount
+                    Please add coupon amount
                   </div>
                 </div>
               </md-input-container>
@@ -139,7 +139,7 @@
 
         <md-dialog-actions layout="row" layout-align="space-between center">
             <div layout="row" layout-align="start center">
-                <md-button ng-click="submit()" class="send-button md-accent md-raised" aria-label="Create Promotion">
+                <md-button ng-click="submit()" class="send-button md-accent md-raised" aria-label="Create Coupon">
                     Create
                 </md-button>
             </div>
@@ -147,7 +147,7 @@
             <div layout="row">
                 <md-button class="md-icon-button" aria-label="Delete" ng-click="clearForm()">
                     <md-icon md-font-icon="icon-delete"></md-icon>
-                    <md-tooltip>Clear Promotion</md-tooltip>
+                    <md-tooltip>Clear Coupon</md-tooltip>
                 </md-button>
             </div>
         </md-dialog-actions>
