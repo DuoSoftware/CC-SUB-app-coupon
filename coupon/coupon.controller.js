@@ -54,11 +54,10 @@
 
     $scope.skip=0;
     $scope.take = 100;
-    $scope.data = [];
+    vm.coupons = [];
 
     $scope.loadCoupons = function() {
       vm.listLoaded = false;
-
       $charge.coupon().all($scope.skip, $scope.take, "desc").success(function (data) {
         console.log(data);
         for (var i = 0; i < data.length; i++) {
@@ -74,21 +73,19 @@
             stat = "Expired";
           }
 
-          $scope.data.push(data[i]);
+          vm.coupons.push(data[i]);
 
 
         }
 
         $scope.skip += $scope.take;
 
-        if($scope.skip > $scope.data.length)
+        if($scope.skip >vm.coupons.length)
         {
           $scope.showMoreButton = false;
         }
 
-        vm.couponLocalList = $scope.data;
-
-        vm.coupons = $scope.data;
+       // vm.coupons = $scope.data;
         vm.listLoaded = true;
 
         // $scope.isLoading = false;
@@ -209,6 +206,8 @@
               //
               notifications.toast("Record Saved, Coupon " + $scope.content.couponcode + " Added", 'success');
 
+
+              $scope.skip=0; vm.coupons = [];
               $scope.loadCoupons();
 
               vm.appInnerState = "default";
