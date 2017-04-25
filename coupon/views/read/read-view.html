@@ -184,14 +184,20 @@
 
                 <div flex="5"></div>
 
-                <md-input-container flex="30">
+                <md-input-container flex="30" ng-hide="selectedCoupon.noRedemptionCount">
                   <label>Redemption</label>
-                  <input class="input-text-width" name="redemptionEdit" required ng-model=" selectedCoupon.redemption" type="number" min="1" max="1000000" >
+                  <input class="input-text-width" name="redemptionEdit" required ng-model=" selectedCoupon.editedRedemption" type="number" min="1" max="1000000" >
                   <div ng-messages="vm.couponEdit.redemptionEdit.$error">
                     <div ng-message="max">Redemption must be between 1-7 digits</div>
                     <div ng-message="min">Redemption must be between 1-7 digits</div>
                   </div>
                 </md-input-container>
+
+                <div flex="5"></div>
+
+                <div layout="row" layout-align="start center">
+                  <md-checkbox ng-model="selectedCoupon.noRedemptionCount" id="noRedemptionCount" name="noRedemptionCount" aria-label="noRedemptionCount" class="md-primary" style="margin: 0;">Apply forever</md-checkbox>
+                </div>
 
               </div>
 
@@ -231,18 +237,6 @@
             <md-card-content md-whiteframe="1dp">
 
 
-                <!--<div class="prod-row-wrap" ng-repeat="plan in planList.slice().reverse()">-->
-                  <!--&lt;!&ndash;<md-card layout="row" id="divId" class="add-item-row"  md-whiteframe="1dp">&ndash;&gt;-->
-
-                  <!--<div layout="column" layout-align="center center" style="float: left;width: 200px">-->
-                    <!--<md-checkbox id="plan.guPlanID" ng-checked="couponPlan.indexOf(plan.guPlanID) === 0" name="plan.guPlanID" ng-click="selectPlan(plan.guPlanID)">{{plan.name}}-->
-                      <!--<p>Code : {{plan.code}}</p>-->
-                      <!--<p>Price : $ {{plan.unitPrice}}</p>-->
-                    <!--</md-checkbox>-->
-
-                  <!--</div>-->
-                  <!--&lt;!&ndash;</md-card>&ndash;&gt;-->
-                <!--</div>-->
 
               <label ng-repeat="plan in planList" class="checkbox-inline">
                 <input type="checkbox" name="selectedPlans[]" value="{{plan.guPlanID}}" ng-checked="couponPlan.indexOf(plan.guPlanID) > -1" ng-click="toggleSelection(plan.guPlanID)"> {{plan.code}}

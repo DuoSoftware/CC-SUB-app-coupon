@@ -254,6 +254,14 @@
 
       $scope.changeCoupon=coupon;
       $scope.selectedCoupon = coupon;
+      $scope.selectedCoupon.editedRedemption = $scope.selectedCoupon.redemption;
+
+      $scope.selectedCoupon.noRedemptionCount = false;
+      if($scope.selectedCoupon.redemption === -999)
+      {
+        $scope.selectedCoupon.noRedemptionCount = true;
+        $scope.selectedCoupon.editedRedemption = 1;
+      }
 
       $scope.selectedCoupon.enddate = new Date($scope.selectedCoupon.enddate);
       $scope.selectedCoupon.startdate = new Date($scope.selectedCoupon.startdate);
@@ -337,6 +345,13 @@
           return;
         }
 
+      }
+
+      if($scope.selectedCoupon.noRedemptionCount)
+      {
+        $scope.selectedCoupon.redemption = -999;
+      }else{
+        $scope.selectedCoupon.redemption = $scope.selectedCoupon.editedRedemption;
       }
 
 
