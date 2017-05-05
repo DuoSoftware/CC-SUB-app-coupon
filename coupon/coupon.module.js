@@ -1,9 +1,9 @@
 //////////////////////////////////////
 // App : Coupon
 // Owner  : Ishara Gunathilaka
-// Last changed date : 2017/04/25
-// Version : 6.1.0.2
-// Modified By : Ishara
+// Last changed date : 2017/05/05
+// Version : 6.1.0.3
+// Modified By : Kasun
 /////////////////////////////////
 
 (function ()
@@ -41,7 +41,7 @@
             });
 
         msNavigationServiceProvider.saveItem('coupon', {
-            title    : 'coupon',
+            title    : 'Coupon',
             state    : 'app.coupon',
             weight   : 11
         });
