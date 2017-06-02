@@ -62,7 +62,7 @@
 		$charge.settingsapp().getDuobaseFieldDetailsByTableNameAndFieldName("CTS_GeneralAttributes","BaseCurrency").success(function(data) {
 			$scope.baseCurrency=data[0].RecordFieldData;
 		}).error(function(data) {
-			console.log(data);
+			// console.log(data);
 			$scope.BaseCurrency="USD";
 			//$scope.selectedCurrency = $scope.BaseCurrency;
 		})
@@ -141,7 +141,7 @@
 		$scope.loadCoupons = function() {
 			vm.listLoaded = false;
 			$charge.coupon().all($scope.skip, $scope.take, "desc").success(function (data) {
-				console.log(data);
+				// console.log(data);
 				for (var i = 0; i < data.length; i++) {
 
 					var stat = "Active";
@@ -175,7 +175,7 @@
 			}).error(function (data) {
 				vm.listLoaded = true;
 				$scope.showMoreButton = false;
-				console.log(data);
+				// console.log(data);
 			})
 
 		}
@@ -188,7 +188,7 @@
 			vm.listPlanLoaded = false;
 
 			$charge.plan().allPlans($scope.skip, $scope.take, "desc").success(function (data) {
-				console.log(data);
+				// console.log(data);
 				for (var i = 0; i < data.length; i++) {
 
 					$scope.planList.push(data[i]);
@@ -199,7 +199,7 @@
 				// $scope.isLoading = false;
 			}).error(function (data) {
 				vm.listPlanLoaded = true;
-				console.log(data);
+				// console.log(data);
 			})
 
 		}
@@ -295,7 +295,7 @@
 					}
 				}).error(function (data) {
 
-					console.log(data);
+					// console.log(data);
 
 					$scope.isSaveClicked = false;
 
@@ -322,7 +322,7 @@
 
 		$scope.selectCoupon = function(coupon)
 		{
-			console.log(coupon);
+			// console.log(coupon);
 
 			$scope.isReadLoaded = false;
 			$scope.editOff = true;
@@ -369,7 +369,7 @@
 			if(!$scope.selectedCoupon.associateplan) {
 				$charge.coupon().getDetailsByCouponId(coupon.gucouponid).success(function (data) {
 
-					console.log(data);
+					// console.log(data);
 
 					for (var i = 0; i < data.length; i++) {
 						$scope.couponPlan.push(data[i].guplanid);
@@ -378,7 +378,7 @@
 					$scope.isReadLoaded = true;
 				}).error(function (data) {
 					$scope.couponPlan = [];
-					console.log(data);
+					// console.log(data);
 					$scope.isReadLoaded = true;
 				})
 			}else{
@@ -485,7 +485,7 @@
 					promCont.scrollTop=0;
 				}
 			}).error(function (data) {
-				console.log(data);
+				// console.log(data);
 				$scope.isSaveClicked = false;
 				promCont.scrollTop=0;
 				notifications.toast("Error when updating record", "error");
