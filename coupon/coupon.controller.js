@@ -238,7 +238,7 @@
 					return;
 				}
 
-        if($scope.content.coupontype === 1)
+        if(parseInt($scope.content.coupontype) === 1)
         {
           $scope.content.associateplan = true;
         }
@@ -428,7 +428,7 @@
 				return;
 			}
 
-			if($scope.selectedCoupon.coupontype === 1)
+			if(parseInt($scope.selectedCoupon.coupontype) === 1)
       {
         $scope.selectedCoupon.associateplan = true;
       }
@@ -476,7 +476,6 @@
 				}
 
 			}
-
 			editReq.associateplan= editReq.associateplan? 0 : 1;// in db associatePlan true means there are plans, in app associatePlan === true means apply to all plans
 
 
