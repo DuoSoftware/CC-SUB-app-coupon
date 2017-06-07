@@ -47,6 +47,22 @@
 </div>
 
 <div class="productName" layout="column" layout-align="center start" flex ng-if="!showInpageReadpane">
+  <div layout="row">
+    <span layout="column" layout-align="center center" class="header-text">Coupon Type</span>
+    <div layout="column" layout="center center">
+      <md-button ng-hide="showOcc" class="sort_btn md-icon-button" layout="column" layout="center center" ng-click="sortBy('coupontype',true,'Coupon Type')">
+        <md-icon class="sort_btn_icon merged" md-font-icon="icon-chevron-up"></md-icon>
+        <md-icon md-font-icon="icon-chevron-down"></md-icon>
+      </md-button>
+      <md-button ng-show="showOcc" class="sort_btn md-icon-button" layout="column" layout="center center" ng-click="sortBy('coupontype',null,'Coupon Type')">
+        <md-icon ng-if="reverse==true" class="sort_btn_icon" md-font-icon="icon-chevron-up"></md-icon>
+        <md-icon ng-if="reverse==false" md-font-icon="icon-chevron-down"></md-icon>
+      </md-button>
+    </div>
+  </div>
+</div>
+
+<div class="productName" layout="column" layout-align="center start" flex ng-if="!showInpageReadpane">
     <div layout="row">
         <span layout="column" layout-align="center center" class="header-text">Occurrences</span>
         <div layout="column" layout="center center">

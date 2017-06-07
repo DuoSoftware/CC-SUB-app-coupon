@@ -31,6 +31,11 @@
             </span>
         </div>
 
+      <div flex layout="column" layout-align="center start" ng-if="!showInpageReadpane">
+        <span ng-if="coupon.coupontype === 0">Promotion</span>
+        <span ng-if="coupon.coupontype === 1">Coupon</span>
+      </div>
+
         <div flex layout="column" layout-align="center start" ng-if="!showInpageReadpane">
             <span>{{coupon.noofoccurence}}</span>
         </div>

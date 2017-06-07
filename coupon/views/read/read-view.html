@@ -289,6 +289,14 @@
                                 <div ng-message="maxlength">Code must be between 1-20 characters</div>
                             </div>
                         </md-input-container>
+                      <div flex="5"></div>
+                      <md-input-container flex="30">
+                        <label>Coupon type</label>
+                        <md-select name="couponType" ng-required ng-model="content.coupontype">
+                          <md-option value="0">Promotion</md-option>
+                          <md-option value="1">Coupon</md-option>
+                        </md-select>
+                      </md-input-container>
                     </div>
                     <div layout="row">
                         <md-input-container flex="30">
@@ -312,7 +320,9 @@
                                 <div ng-message="min">Occurrences must be between 1-7 digits</div>
                             </div>
                         </md-input-container>
+
                         <div flex="5"></div>
+
                         <div flex="30">
                             <div layout="column" flex>
                                 <md-input-container class="mb-0">
@@ -388,7 +398,7 @@
                     <div class="b b-light" style="overflow: hidden;">
                         <div md-whiteframe="1dp" class="pos-rel" style="z-index: 1;">
                             <div class="p-10 light-gray">
-                                <md-checkbox ng-model="content.associateplan" id="applyToAll" name="applyToAll" aria-label="Apply to all" class="md-primary m-0">Apply to all</md-checkbox>
+                                <md-checkbox ng-disabled="content.coupontype > 0" ng-model="content.associateplan" id="applyToAll" name="applyToAll" aria-label="Apply to all" class="md-primary m-0">Apply to all</md-checkbox>
                             </div>
                         </div>
                         <div class="msg-empty-list" ng-if="planList.length == 0">
@@ -404,7 +414,7 @@
                         <md-content ms-scroll class="subheaded-list-content mh-352" flex ng-if="!content.associateplan">
                             <div class="p-10" layout="row" ng-repeat="plan in planList">
                                 <span flex>
-                                    <md-checkbox ng-checked="couponPlan.indexOf(plan.guPlanID) > -1" ng-click="toggleSelection(plan.guPlanID)" name="selectedPlans[]" class="m-0 md-primary">{{plan.code}}</md-checkbox>
+                                    <md-checkbox ng-disabled="content.coupontype > 0" ng-checked="couponPlan.indexOf(plan.guPlanID) > -1" ng-click="toggleSelection(plan.guPlanID)" name="selectedPlans[]" class="m-0 md-primary">{{plan.code}}</md-checkbox>
                                 </span>
                             </div>
                         </md-content>

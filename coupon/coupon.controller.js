@@ -40,6 +40,7 @@
 		$scope.isSpinnerShown = true;
 		$scope.content.startdate = new Date();
 		$scope.content.enddate=new Date();
+    $scope.content.coupontype=0;
 
 		$scope.currentDate = moment(new Date().toISOString()).format('LL');
 
@@ -237,6 +238,11 @@
 					return;
 				}
 
+        if($scope.content.coupontype === 1)
+        {
+          $scope.content.associateplan = true;
+        }
+
 				if ((!$scope.content.associateplan) ) {
 
 					if ($scope.couponPlan.length < 1) {
@@ -251,7 +257,6 @@
 				if(!$scope.content.noRedemptionCount){
 					redemptionCount = $scope.content.couponRedemption;
 				}
-
 				// main table details and promo product details
 				$scope.content = {
 					"startdate": $scope.content.startdate,
@@ -261,7 +266,8 @@
 					"associateplan":$scope.content.associateplan ? 1 : 0,
 					"redemption": redemptionCount,
 					"discounttype": $scope.content.discounttype,
-					"discountamount": $scope.content.couponDiscount
+					"discountamount": $scope.content.couponDiscount,
+          "coupontype": $scope.content.coupontype
 				};
 
 
@@ -422,7 +428,12 @@
 				return;
 			}
 
-			if ((!$scope.content.associateplan) ) {
+			if($scope.selectedCoupon.coupontype === 1)
+      {
+        $scope.selectedCoupon.associateplan = true;
+      }
+
+			if ((!$scope.selectedCoupon.associateplan) ) {
 
 				if ($scope.couponPlan.length < 1) {
 					$scope.isSaveClicked = false;
@@ -451,7 +462,8 @@
 				"associateplan": $scope.selectedCoupon.associateplan ? 1 : 0,
 				"redemption":$scope.selectedCoupon.redemption,
 				"discounttype":$scope.selectedCoupon.discounttype,
-				"discountamount":$scope.selectedCoupon.discountamount
+        "discountamount":$scope.selectedCoupon.discountamount,
+        "coupontype":$scope.selectedCoupon.coupontype
 			}
 
 
@@ -469,16 +481,19 @@
 
 
 			$charge.coupon().update(editReq).success(function (data) {
-				//
-				if (data.error == "00000") {
+
+			  if (data.error == "00000") {
 					$scope.editOff = !$scope.editOff; $scope.editStyle ="";
 					$scope.isSaveClicked = false;
 
 					notifications.toast("Record Updated, coupon code " + editReq.couponcode, "success");
 
+					$scope.selectedCoupon.coupontype = parseInt($scope.selectedCoupon.coupontype);
+
 					editReq.associateplan = !editReq.associateplan;
 					editReq.redemptionUse = $scope.selectedCoupon.redemptionUse;						//
 					editReq.currentuse = $scope.selectedCoupon.currentuse;
+					editReq.coupontype = parseInt($scope.selectedCoupon.coupontype);
 					$scope.selectCoupon(editReq);
 
 					$scope.toggleControllText = "EDIT COUPON";
