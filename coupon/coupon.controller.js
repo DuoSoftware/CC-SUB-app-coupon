@@ -495,6 +495,9 @@
 					editReq.coupontype = parseInt($scope.selectedCoupon.coupontype);
 					$scope.selectCoupon(editReq);
 
+          $scope.skip=0; vm.coupons = [];
+          $scope.loadCoupons();
+
 					$scope.toggleControllText = "EDIT COUPON";
 					promCont.scrollTop=0;
 				}
