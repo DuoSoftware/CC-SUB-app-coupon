@@ -183,6 +183,48 @@
 
 		$scope.loadCoupons();
 
+    $scope.loadCouponsByType = function(type) {
+      vm.listLoaded = false;
+      $charge.coupon().getCouponsByType($scope.skip, $scope.take,type, "desc").success(function (data) {
+        // console.log(data);
+        for (var i = 0; i < data.length; i++) {
+
+          var stat = "Active";
+
+          if ( moment(data[i]["enddate"]).format('L') < moment(new Date().toISOString()).format('L')) {
+
+            stat = "Expired";
+            data[i].status = stat;
+          }else if (data[i]["noofoccurence"] <= data[i]["currentuse"]) {
+            stat = "Expired";
+            data[i].status = stat;
+          }else{
+            data[i].status = stat;
+          }
+          vm.coupons.push(data[i]);
+
+
+        }
+
+        $scope.skip += $scope.take;
+
+        if($scope.skip >vm.coupons.length)
+        {
+          $scope.showMoreButton = false;
+        }
+
+        // vm.coupons = $scope.data;
+        vm.listLoaded = true;
+
+        // $scope.isLoading = false;
+      }).error(function (data) {
+        vm.listLoaded = true;
+        $scope.showMoreButton = false;
+        // console.log(data);
+      })
+
+    }
+
 
 		$scope.planList = [];
 		$scope.loadPlans = function() {
@@ -579,6 +621,20 @@
 				$scope.couponPlan.push(code);
 			}
 		};
+
+
+    $scope.applyFilters = function (filter){
+      $scope.skip=0;
+      vm.coupons=[];
+
+      if(filter === '')
+      {
+        $scope.loadCoupons();
+
+      }else{
+        $scope.loadCouponsByType(filter);
+      }
+    }
 
 
 	}
