@@ -272,6 +272,9 @@
 
 <div layout="column">
     <md-content class="pb-30" flex ms-scroll>
+        <div layout="row">
+            <div></div>
+        </div>
         <form name="vm.couponAdd" ng-submit="submit()" id="couponForm" novalidate>
             <!--CREATE NEW INVOICE _ CARDED=================================================-->
             <md-card flex class="input-block-gen">
@@ -281,6 +284,14 @@
                     </div>
                 </md-card-title>
                 <md-card-content>
+                    <div layout="row" layout-align="center center">
+                        <md-input-container>
+                            <md-radio-group name="couponType" ng-required ng-model="content.coupontype" layout="row" class="cc-switch-buttons-group">
+                                <md-radio-button value="0" class="cc-switch-buttons" md-ink-ripple ng-disabled="content.coupontype == 0" ng-style="content.coupontype == 1 ? {'z-index':'1'} : {'z-index':'0'}">Promotion</md-radio-button>
+                                <md-radio-button value="1" class="cc-switch-buttons" md-ink-ripple ng-disabled="content.coupontype == 1" ng-style="content.coupontype == 0 ? {'z-index':'1'} : {'z-index':'0'}">Coupon</md-radio-button>
+                            </md-radio-group>
+                        </md-input-container>
+                    </div>
                     <div layout="row">
                         <md-input-container flex="30">
                             <label>Coupon Code</label>
@@ -289,14 +300,7 @@
                                 <div ng-message="maxlength">Code must be between 1-20 characters</div>
                             </div>
                         </md-input-container>
-                      <div flex="5"></div>
-                      <md-input-container flex="30">
-                        <label>Coupon type</label>
-                        <md-select name="couponType" ng-required ng-model="content.coupontype">
-                          <md-option value="0">Promotion</md-option>
-                          <md-option value="1">Coupon</md-option>
-                        </md-select>
-                      </md-input-container>
+                      <!--<div flex="5"></div>-->
                     </div>
                     <div layout="row">
                         <md-input-container flex="30">
@@ -356,9 +360,11 @@
                         <div flex="5"></div>
                         <md-input-container flex="30">
                             <label>Discount</label>
-                            <input ng-required="true" minlength="null"  md-maxlength="null" type="number" min="1" name="couponDiscount" ng-pattern="" ng-model="content.couponDiscount" ng-maxlength="20">
+                            <input ng-required="true" minlength="null" md-maxlength="null" type="number" name="couponDiscount" ng-pattern="" ng-model="content.couponDiscount" min="1" max="{{content.discounttype == 0 ? 1000000 : 100}}">
                             <div ng-messages="vm.couponAdd.couponDiscount.$error">
-                                <div ng-message="maxlength">Discount must be between 1-20 characters</div>
+                                <div ng-message="max" ng-if="content.discounttype == 0">Discount must be between 1-7 digits</div>
+                                <div ng-message="max" ng-if="content.discounttype == 1">Discount must be between 1-100</div>
+                                <div ng-message="min">Discount can not be minus</div>
                             </div>
                         </md-input-container>
                     </div>
