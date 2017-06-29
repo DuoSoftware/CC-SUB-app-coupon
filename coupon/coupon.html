@@ -265,8 +265,8 @@
                                   <div layout="row" layout-align="center center">
                                       <md-input-container>
                                           <md-radio-group name="couponType" ng-required ng-model="selectedCoupon.coupontype" layout="row" class="cc-switch-buttons-group">
-                                              <md-radio-button value="0" class="cc-switch-buttons" md-ink-ripple ng-disabled="selectedCoupon.coupontype == 0" ng-style="content.coupontype == 1 ? {'z-index':'1'} : {'z-index':'0'}">Promotion</md-radio-button>
-                                              <md-radio-button value="1" class="cc-switch-buttons" md-ink-ripple ng-disabled="selectedCoupon.coupontype == 1" ng-style="content.coupontype == 0 ? {'z-index':'1'} : {'z-index':'0'}">Coupon</md-radio-button>
+                                              <md-radio-button value="0" class="cc-switch-buttons" md-ink-ripple ng-disabled="selectedCoupon.coupontype == 0" ng-style="selectedCoupon.coupontype == 1 ? {'z-index':'1'} : {'z-index':'0'}">Promotion</md-radio-button>
+                                              <md-radio-button value="1" class="cc-switch-buttons" md-ink-ripple ng-disabled="selectedCoupon.coupontype == 1" ng-style="selectedCoupon.coupontype == 0 ? {'z-index':'1'} : {'z-index':'0'}">Coupon</md-radio-button>
                                           </md-radio-group>
                                       </md-input-container>
                                   </div>
