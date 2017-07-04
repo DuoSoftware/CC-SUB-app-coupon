@@ -16,7 +16,7 @@
 		vm.checked = [];
 		vm.colors = ['blue-bg', 'blue-grey-bg', 'orange-bg', 'pink-bg', 'purple-bg'];
 
-		$scope.selectedCoupon = {};
+		vm.selectedCoupon = {};
 
 		vm.responsiveReadPane = undefined;
 		vm.activeCouponPaneIndex = 0;
@@ -40,7 +40,7 @@
 		$scope.isSpinnerShown = true;
 		$scope.content.startdate = new Date();
 		$scope.content.enddate=new Date();
-    $scope.content.coupontype=0;
+		$scope.content.coupontype=0;
 
 		$scope.currentDate = moment(new Date().toISOString()).format('LL');
 
@@ -77,7 +77,7 @@
 			}else if(state=='close'){
 				if(!$scope.editOff){
 					// $scope.cancelEdit();
-					$scope.selectedCoupon = $scope.tempEditCoupon;
+					vm.selectedCoupon = vm.tempEditCoupon;
 					$scope.editOff=true;
 				}else{
 					$scope.showInpageReadpane = false;
@@ -183,47 +183,47 @@
 
 		$scope.loadCoupons();
 
-    $scope.loadCouponsByType = function(type) {
-      vm.listLoaded = false;
-      $charge.coupon().getCouponsByType($scope.skip, $scope.take,type, "desc").success(function (data) {
-        // console.log(data);
-        for (var i = 0; i < data.length; i++) {
+		$scope.loadCouponsByType = function(type) {
+			vm.listLoaded = false;
+			$charge.coupon().getCouponsByType($scope.skip, $scope.take,type, "desc").success(function (data) {
+				// console.log(data);
+				for (var i = 0; i < data.length; i++) {
 
-          var stat = "Active";
+					var stat = "Active";
 
-          if ( moment(data[i]["enddate"]).format('L') < moment(new Date().toISOString()).format('L')) {
+					if ( moment(data[i]["enddate"]).format('L') < moment(new Date().toISOString()).format('L')) {
 
-            stat = "Expired";
-            data[i].status = stat;
-          }else if (data[i]["noofoccurence"] <= data[i]["currentuse"]) {
-            stat = "Expired";
-            data[i].status = stat;
-          }else{
-            data[i].status = stat;
-          }
-          vm.coupons.push(data[i]);
+						stat = "Expired";
+						data[i].status = stat;
+					}else if (data[i]["noofoccurence"] <= data[i]["currentuse"]) {
+						stat = "Expired";
+						data[i].status = stat;
+					}else{
+						data[i].status = stat;
+					}
+					vm.coupons.push(data[i]);
 
 
-        }
+				}
 
-        $scope.skip += $scope.take;
+				$scope.skip += $scope.take;
 
-        if($scope.skip >vm.coupons.length)
-        {
-          $scope.showMoreButton = false;
-        }
+				if($scope.skip >vm.coupons.length)
+				{
+					$scope.showMoreButton = false;
+				}
 
-        // vm.coupons = $scope.data;
-        vm.listLoaded = true;
+				// vm.coupons = $scope.data;
+				vm.listLoaded = true;
 
-        // $scope.isLoading = false;
-      }).error(function (data) {
-        vm.listLoaded = true;
-        $scope.showMoreButton = false;
-        // console.log(data);
-      })
+				// $scope.isLoading = false;
+			}).error(function (data) {
+				vm.listLoaded = true;
+				$scope.showMoreButton = false;
+				// console.log(data);
+			})
 
-    }
+		}
 
 
 		$scope.planList = [];
@@ -280,10 +280,10 @@
 					return;
 				}
 
-        if(parseInt($scope.content.coupontype) === 1)
-        {
-          $scope.content.associateplan = true;
-        }
+				if(parseInt($scope.content.coupontype) === 1)
+				{
+					$scope.content.associateplan = true;
+				}
 
 				if ((!$scope.content.associateplan) ) {
 
@@ -309,7 +309,7 @@
 					"redemption": redemptionCount,
 					"discounttype": $scope.content.discounttype,
 					"discountamount": $scope.content.couponDiscount,
-          "coupontype": $scope.content.coupontype
+					"coupontype": $scope.content.coupontype
 				};
 
 
@@ -336,6 +336,9 @@
 						$scope.skip=0; vm.coupons = [];$scope.content={};
 						vm.appInnerState = "default";
 						vm.addButtonDisplayText = "CREATE NEW";
+						// vm.couponAdd.$setDirty();
+						vm.couponAdd.$setPristine();
+						vm.couponAdd.$setUntouched();
 						vm.activePlanPaneIndex = 0;
 						$scope.loadCoupons();
 						$scope.isSaveClicked = false;
@@ -375,30 +378,29 @@
 			$scope.isReadLoaded = false;
 			$scope.editOff = true;
 
-			$scope.selectedCoupon = {};
+			vm.selectedCoupon = {};
 
 			$scope.changeCoupon=coupon;
-			$scope.selectedCoupon = coupon;
-			$scope.tempEditCoupon = angular.copy(coupon);
-			$scope.selectedCoupon.editedRedemption = $scope.selectedCoupon.redemption;
+			vm.selectedCoupon = coupon;
+			vm.selectedCoupon.editedRedemption = vm.selectedCoupon.redemption;
 
-			$scope.selectedCoupon.noRedemptionCount = false;
-			if($scope.selectedCoupon.redemption === -999)
+			vm.selectedCoupon.noRedemptionCount = false;
+			if(vm.selectedCoupon.redemption === -999)
 			{
-				$scope.selectedCoupon.noRedemptionCount = true;
-				$scope.selectedCoupon.editedRedemption = 1;
+				vm.selectedCoupon.noRedemptionCount = true;
+				vm.selectedCoupon.editedRedemption = 1;
 			}
 
-			$scope.selectedCoupon.enddate = new Date($scope.selectedCoupon.enddate);
-			$scope.selectedCoupon.startdate = new Date($scope.selectedCoupon.startdate);
+			vm.selectedCoupon.enddate = new Date(vm.selectedCoupon.enddate);
+			vm.selectedCoupon.startdate = new Date(vm.selectedCoupon.startdate);
 
-			// $scope.selectedCoupon.associateplan =  $scope.selectedCoupon.associateplan === 1 ? true : false;
-			if($scope.selectedCoupon.associateplan === 1){
-				$scope.selectedCoupon.associateplan=false;
-			}else if($scope.selectedCoupon.associateplan === 0){
-				$scope.selectedCoupon.associateplan=true;
+			// vm.selectedCoupon.associateplan =  vm.selectedCoupon.associateplan === 1 ? true : false;
+			if(vm.selectedCoupon.associateplan === 1){
+				vm.selectedCoupon.associateplan=false;
+			}else if(vm.selectedCoupon.associateplan === 0){
+				vm.selectedCoupon.associateplan=true;
 			}
-			//$scope.selectedCoupon.associateplan =  !$scope.selectedCoupon.associateplan;
+			//vm.selectedCoupon.associateplan =  !vm.selectedCoupon.associateplan;
 			// in db associatePlan true means there are plans, in app associatePlan === true means apply to all plans
 
 			$timeout(function ()
@@ -414,7 +416,7 @@
 
 			$scope.couponPlan = [];
 
-			if(!$scope.selectedCoupon.associateplan) {
+			if(!vm.selectedCoupon.associateplan) {
 				$charge.coupon().getDetailsByCouponId(coupon.gucouponid).success(function (data) {
 
 					// console.log(data);
@@ -444,10 +446,10 @@
 
 			$scope.isSaveClicked = true;
 			//
-			var editReq=$scope.selectedCoupon;
+			var editReq=vm.selectedCoupon;
 
 
-			if(moment($scope.selectedCoupon.enddate).format('L') < moment($scope.selectedCoupon.startdate).format('L'))
+			if(moment(vm.selectedCoupon.enddate).format('L') < moment(vm.selectedCoupon.startdate).format('L'))
 			{
 				$scope.isSaveClicked = false;
 				notifications.toast('End date should be greater than start date','error');
@@ -455,7 +457,7 @@
 
 				return;
 			}
-			else  if($scope.selectedCoupon.noofoccurence < 0)
+			else  if(vm.selectedCoupon.noofoccurence < 0)
 			{
 				$scope.isSaveClicked = false;
 				//notifications.toast('Occurrence count cannot be less than 0.','error');
@@ -470,12 +472,12 @@
 				return;
 			}
 
-			if(parseInt($scope.selectedCoupon.coupontype) === 1)
-      {
-        $scope.selectedCoupon.associateplan = true;
-      }
+			if(parseInt(vm.selectedCoupon.coupontype) === 1)
+			{
+				vm.selectedCoupon.associateplan = true;
+			}
 
-			if ((!$scope.selectedCoupon.associateplan) ) {
+			if ((!vm.selectedCoupon.associateplan) ) {
 
 				if ($scope.couponPlan.length < 1) {
 					$scope.isSaveClicked = false;
@@ -486,31 +488,31 @@
 
 			}
 
-			if($scope.selectedCoupon.noRedemptionCount)
+			if(vm.selectedCoupon.noRedemptionCount)
 			{
-				$scope.selectedCoupon.redemption = -999;
+				vm.selectedCoupon.redemption = -999;
 			}else{
-				$scope.selectedCoupon.redemption = $scope.selectedCoupon.editedRedemption;
+				vm.selectedCoupon.redemption = vm.selectedCoupon.editedRedemption;
 			}
 
 
 
 			editReq ={
-				"gucouponid":$scope.selectedCoupon.gucouponid,
-				"startdate":$scope.selectedCoupon.startdate,
-				"enddate":$scope.selectedCoupon.enddate,
-				"couponcode":$scope.selectedCoupon.couponcode,
-				"noofoccurence":$scope.selectedCoupon.noofoccurence,
-				"associateplan": $scope.selectedCoupon.associateplan ? 1 : 0,
-				"redemption":$scope.selectedCoupon.redemption,
-				"discounttype":$scope.selectedCoupon.discounttype,
-        "discountamount":$scope.selectedCoupon.discountamount,
-        "coupontype":$scope.selectedCoupon.coupontype
+				"gucouponid":vm.selectedCoupon.gucouponid,
+				"startdate":vm.selectedCoupon.startdate,
+				"enddate":vm.selectedCoupon.enddate,
+				"couponcode":vm.selectedCoupon.couponcode,
+				"noofoccurence":vm.selectedCoupon.noofoccurence,
+				"associateplan": vm.selectedCoupon.associateplan ? 1 : 0,
+				"redemption":vm.selectedCoupon.redemption,
+				"discounttype":vm.selectedCoupon.discounttype,
+				"discountamount":vm.selectedCoupon.discountamount,
+				"coupontype":vm.selectedCoupon.coupontype
 			}
 
 
 
-			if(!$scope.selectedCoupon.associateplan){
+			if(!vm.selectedCoupon.associateplan){
 				editReq.couponDetails=[];
 
 				for(var i =0;i<$scope.couponPlan.length;i++){
@@ -523,22 +525,22 @@
 
 			$charge.coupon().update(editReq).success(function (data) {
 
-			  if (data.error == "00000") {
+				if (data.error == "00000") {
 					$scope.editOff = !$scope.editOff; $scope.editStyle ="";
 					$scope.isSaveClicked = false;
 
 					notifications.toast("Record Updated, coupon code " + editReq.couponcode, "success");
 
-					$scope.selectedCoupon.coupontype = parseInt($scope.selectedCoupon.coupontype);
+					vm.selectedCoupon.coupontype = parseInt(vm.selectedCoupon.coupontype);
 
 					editReq.associateplan = !editReq.associateplan;
-					editReq.redemptionUse = $scope.selectedCoupon.redemptionUse;						//
-					editReq.currentuse = $scope.selectedCoupon.currentuse;
-					editReq.coupontype = parseInt($scope.selectedCoupon.coupontype);
+					editReq.redemptionUse = vm.selectedCoupon.redemptionUse;						//
+					editReq.currentuse = vm.selectedCoupon.currentuse;
+					editReq.coupontype = parseInt(vm.selectedCoupon.coupontype);
 					$scope.selectCoupon(editReq);
 
-          $scope.skip=0; vm.coupons = [];
-          $scope.loadCoupons();
+					$scope.skip=0; vm.coupons = [];
+					$scope.loadCoupons();
 
 					$scope.toggleControllText = "EDIT COUPON";
 					promCont.scrollTop=0;
@@ -554,6 +556,7 @@
 
 		$scope.toggleReadPane = function () {
 			$scope.editOff = true;
+			$scope.content.coupontype = 0;
 			vm.activePlanPaneIndex = 1;
 			$scope.couponPlan=[];
 			$scope.showInpageReadpane = false;
@@ -583,7 +586,7 @@
 
 		$scope.toggleControllText = "EDIT COUPON";
 
-		$scope.toggleEdit = function (ctrlText) {
+		$scope.toggleEdit = function (ctrlText, coupon) {
 			var promCont = document.getElementById('editPromContainer');
 
 			if($scope.editOff){
@@ -594,6 +597,7 @@
 
 			if($scope.editOff==true)
 			{
+				vm.tempEditCoupon = angular.copy(coupon);
 				$scope.editOff = false;
 				promCont.scrollTop=0;
 
@@ -604,8 +608,7 @@
 				promCont.scrollTop=0;
 
 			}
-
-		}
+		};
 
 		// toggle selection for a given fruit by name
 		$scope.toggleSelection = function toggleSelection(code) {
@@ -623,18 +626,18 @@
 		};
 
 
-    $scope.applyFilters = function (filter){
-      $scope.skip=0;
-      vm.coupons=[];
+		$scope.applyFilters = function (filter){
+			$scope.skip=0;
+			vm.coupons=[];
 
-      if(filter === '')
-      {
-        $scope.loadCoupons();
+			if(filter === '')
+			{
+				$scope.loadCoupons();
 
-      }else{
-        $scope.loadCouponsByType(filter);
-      }
-    }
+			}else{
+				$scope.loadCouponsByType(filter);
+			}
+		}
 
 
 	}

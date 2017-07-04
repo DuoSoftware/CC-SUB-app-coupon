@@ -125,7 +125,7 @@
 
                           <md-menu-content width="3">
                               <md-menu-item>
-                                  <md-button ng-disabled="inpageReadPaneEdit" aria-label="Delete" ng-click="toggleEdit(toggleControllText)">
+                                  <md-button ng-disabled="inpageReadPaneEdit" aria-label="Delete" ng-click="toggleEdit(toggleControllText, vm.selectedCoupon)">
                                       <md-icon md-font-icon="icon-pencil"></md-icon>
                                       <span>Edit</span>
                                   </md-button>
@@ -148,65 +148,67 @@
                   <div class="p-16" layout="row" layout-align="space-between center" ng-if="editOff">
                       <div>
                           <div layout="column" layout-align="center start">
-                              <div class="fs-20 font-accent fw-400">{{selectedCoupon.couponcode}}</div>
+                              <div class="fs-20 font-accent fw-400">{{vm.selectedCoupon.couponcode}}</div>
                               <!--<div layout="row" class="op-5 fs-12 mt-5">-->
-                                  <!--<span>Coupon ID : <b>{{ selectedCoupon.gucouponid}}</b></span>-->
+                                  <!--<span>Coupon ID : <b>{{ vm.selectedCoupon.gucouponid}}</b></span>-->
                               <!--</div>-->
                           </div>
                       </div>
                       <div>
-                          <span class="pill" layout="row" layout-align="center center" ng-class="{'negative':selectedCoupon.status==='Expired','positive':selectedCoupon.status==='Active'}">{{selectedCoupon.status}}</span>
+                          <span class="pill" layout="row" layout-align="center center" ng-class="{'negative':vm.selectedCoupon.status==='Expired','positive':vm.selectedCoupon.status==='Active'}">{{vm.selectedCoupon.status}}</span>
                       </div>
                   </div>
-                  <md-divider class="mt-10" ng-if="editOff"></md-divider>
+                  <md-divider ng-if="editOff"></md-divider>
                   <md-content ng-if="editOff" flex ms-scroll class="p-16 pt-20">
                       <div layout="row" layout-align="start start">
                           <div class="main-list-preloader animate-fade-in-out" layout="row" layout-sm="column" layout-align="space-around" ng-if="!isReadLoaded">
                               <md-progress-circular md-mode="indeterminate"></md-progress-circular>
                           </div>
                           <div flex class="mr-15">
-                              <div layout="row" layout-align="start center" class="info-grid-row mb-40">
-                                  <div class="iconed-label"><span>Type</span></div>
-                                  <span class="secondary-state-capsule">
-                                      <span ng-show="selectedCoupon.discounttype === 0">Flat</span>
-                                      <span ng-show="selectedCoupon.discounttype === 1">Percentage</span>
-                                  </span>
-                              </div>
-                              <div layout="row" layout-align="start center" class="info-grid-row bordered-dark">
-                                  <div flex="40" class="iconed-label">
-                                      <md-icon md-font-icon="icon-calendar-today"></md-icon> <span>Start date</span>
+                              <div layout="row" layout-align="start center" class="mb-40">
+                                  <div flex="40">
+                                      <span class="iconed-label"><span>Type</span></span>
+                                      <span class="secondary-state-capsule">{{vm.selectedCoupon.discounttype === 0 ? 'Flat' : 'Percentage'}}</span>
                                   </div>
-                                  <div flex class="">{{ selectedCoupon.startdate | date:'yyyy-MM-dd' }}</div>
+                                  <div flex>
+                                      <span class="iconed-label"><span>Coupon category</span></span>
+                                      <span class="secondary-state-capsule">{{vm.selectedCoupon.coupontype === 0 ? 'Promotion' : 'Coupon'}}</span>
+                                  </div>
                               </div>
                               <div layout="row" layout-align="start center" class="info-grid-row bordered-dark">
                                   <div flex="40" class="iconed-label">
-                                      <md-icon md-font-icon="icon-calendar-check"></md-icon> <span>End date</span>
+                                      <md-icon md-font-icon="icon-calendar-check"></md-icon> <span>Start date</span>
+                                  </div>
+                                  <div flex class="">{{ vm.selectedCoupon.startdate | date:'yyyy-MM-dd' }}</div>
+                              </div>
+                              <div layout="row" layout-align="start center" class="info-grid-row bordered-dark">
+                                  <div flex="40" class="iconed-label">
+                                      <md-icon md-font-icon="icon-calendar-remove"></md-icon> <span>End date</span>
                                   </div>
                                   <div flex class="">
-                                      <span ng-if="selectedCoupon.enddate != ''">{{ selectedCoupon.enddate| date:'yyyy-MM-dd'}}</span>
-                                      <span ng-if="selectedCoupon.enddate == ''">No end date</span>
+                                      <span ng-if="vm.selectedCoupon.enddate != ''">{{ vm.selectedCoupon.enddate| date:'yyyy-MM-dd'}}</span>
+                                      <span ng-if="vm.selectedCoupon.enddate == ''">No end date</span>
                                   </div>
                               </div>
-                            <div layout="row" layout-align="start center" class="info-grid-row bordered-dark">
-                              <div flex="40" class="iconed-label">
-                                <md-icon md-font-icon="icon-timetable"></md-icon> <span>Coupon Type</span>
-                              </div>
-                              <div flex class="" ng-if="selectedCoupon.coupontype === 0">Promotion</div>
-                              <div flex class="" ng-if="selectedCoupon.coupontype === 1">Coupon</div>
-                            </div>
+                            <!--<div layout="row" layout-align="start center" class="info-grid-row bordered-dark">-->
+                              <!--<div flex="40" class="iconed-label">-->
+                                <!--<md-icon md-font-icon="icon-timetable"></md-icon> <span>Coupon category</span>-->
+                              <!--</div>-->
+                              <!--<div flex class="" ng-if="vm.selectedCoupon.coupontype === 0">Promotion</div>-->
+                              <!--<div flex class="" ng-if="vm.selectedCoupon.coupontype === 1">Coupon</div>-->
+                            <!--</div>-->
                               <div layout="row" layout-align="start center" class="info-grid-row bordered-dark">
                                   <div flex="40" class="iconed-label">
                                       <md-icon md-font-icon="icon-timetable"></md-icon> <span>No of occurrences</span>
                                   </div>
-                                  <div flex class="">{{ selectedCoupon.noofoccurence}}</div>
+                                  <div flex class="">{{ vm.selectedCoupon.noofoccurence}}</div>
                               </div>
                               <div layout="row" layout-align="start center" class="info-grid-row bordered-dark">
                                   <div flex="40" class="iconed-label">
-                                      <md-icon md-font-icon="icon-gift"></md-icon> <span>Redemption</span>
+                                      <md-icon md-font-icon="icon-calendar-clock"></md-icon> <span>Redemption</span>
                                   </div>
-                                  <div flex class="">
-                                      <span ng-if="selectedCoupon.redemption != '-999'">{{ selectedCoupon.redemption}}</span>
-                                      <span ng-if="selectedCoupon.redemption == '-999'" class="op-5">-</span>
+                                  <div flex>
+                                      <span>{{vm.selectedCoupon.redemption != '-999' ? vm.selectedCoupon.redemption : 'No end date'}}</span>
                                   </div>
                               </div>
                               <!--<div layout="row" layout-align="start center" class="info-grid-row">-->
@@ -214,7 +216,7 @@
                                       <!--<md-icon md-font-icon="icon-wallet-giftcard"></md-icon> <span>Redemption used</span>-->
                                   <!--</div>-->
                                   <!--<div flex class="">-->
-                                      <!--{{selectedCoupon.redemptionUse}}-->
+                                      <!--{{vm.selectedCoupon.redemptionUse}}-->
                                   <!--</div>-->
                               <!--</div>-->
                           </div>
@@ -222,19 +224,19 @@
                               <div class="text-center">
                                   <div>Discount</div>
                                   <div class="fs-46 font-accent fw-500">
-                                      <label ng-if="selectedCoupon.discounttype === 1">{{ selectedCoupon.discountamount}} %</label>
-                                      <label ng-if="selectedCoupon.discounttype === 0">{{ selectedCoupon.discountamount | isoCurrency:baseCurrency:0}}</label>
+                                      <label ng-if="vm.selectedCoupon.discounttype === 1">{{ vm.selectedCoupon.discountamount}} %</label>
+                                      <label ng-if="vm.selectedCoupon.discounttype === 0">{{ vm.selectedCoupon.discountamount | isoCurrency:baseCurrency:0}}</label>
                                   </div>
                               </div>
                               <div class="text-center">
                                   <div>Currently used</div>
                                   <div class="fs-46">
-                                      <span>{{selectedCoupon.currentuse}} </span> <span>/ {{ selectedCoupon.noofoccurence}}</span>
+                                      <span>{{vm.selectedCoupon.currentuse}} </span> <span>/ {{ vm.selectedCoupon.noofoccurence}}</span>
                                   </div>
                               </div>
                           </div>
                       </div>
-                      <md-card class="input-block-gen mt-30 m-0" ng-hide="selectedCoupon.associateplan">
+                      <md-card class="input-block-gen mt-30 m-0" ng-hide="vm.selectedCoupon.associateplan">
                           <md-card-title>
                               <div layout="row" layout-align="start center">
                                   <md-icon md-font-icon="icon-attachment"></md-icon> <h3>Entitled plans</h3>
@@ -264,9 +266,9 @@
                               <md-card-content>
                                   <div layout="row" layout-align="center center">
                                       <md-input-container>
-                                          <md-radio-group name="couponType" ng-required ng-model="selectedCoupon.coupontype" layout="row" class="cc-switch-buttons-group">
-                                              <md-radio-button value="0" class="cc-switch-buttons" md-ink-ripple ng-disabled="selectedCoupon.coupontype == 0" ng-style="selectedCoupon.coupontype == 1 ? {'z-index':'1'} : {'z-index':'0'}">Promotion</md-radio-button>
-                                              <md-radio-button value="1" class="cc-switch-buttons" md-ink-ripple ng-disabled="selectedCoupon.coupontype == 1" ng-style="selectedCoupon.coupontype == 0 ? {'z-index':'1'} : {'z-index':'0'}">Coupon</md-radio-button>
+                                          <md-radio-group name="couponType" ng-required ng-model="vm.selectedCoupon.coupontype" layout="row" class="cc-switch-buttons-group">
+                                              <md-radio-button value="0" class="cc-switch-buttons" md-ink-ripple ng-disabled="vm.selectedCoupon.coupontype == 0" ng-style="vm.selectedCoupon.coupontype == 1 ? {'z-index':'1'} : {'z-index':'0'}">Promotion</md-radio-button>
+                                              <md-radio-button value="1" class="cc-switch-buttons" md-ink-ripple ng-disabled="vm.selectedCoupon.coupontype == 1" ng-style="vm.selectedCoupon.coupontype == 0 ? {'z-index':'1'} : {'z-index':'0'}">Coupon</md-radio-button>
                                           </md-radio-group>
                                       </md-input-container>
                                   </div>
@@ -274,25 +276,25 @@
                                       <div layout="row" layout-align="start center" flex="30" class="state-capsule">
                                           <div layout="row">
                                               <span>Coupon code</span>
-                                              <span>{{selectedCoupon.couponcode}}</span>
+                                              <span>{{vm.selectedCoupon.couponcode}}</span>
                                           </div>
                                       </div>
                                   </div>
                                   <div layout="row">
                                       <md-input-container flex="30">
                                           <label>Start Date</label>
-                                          <md-datepicker ng-model="selectedCoupon.startdate" md-placeholder="Start date" ng-hide="editOff"></md-datepicker>
+                                          <md-datepicker ng-model="vm.selectedCoupon.startdate" md-placeholder="Start date" ng-hide="editOff"></md-datepicker>
                                       </md-input-container>
                                       <div flex="5"></div>
                                       <md-input-container flex="30">
                                           <label>End Date</label>
-                                          <md-datepicker ng-model="selectedCoupon.enddate" md-placeholder="End date" ng-disabled="NoEndDate"></md-datepicker>
+                                          <md-datepicker ng-model="vm.selectedCoupon.enddate" md-placeholder="End date" ng-disabled="NoEndDate"></md-datepicker>
                                       </md-input-container>
                                   </div>
                                   <div layout="row">
                                       <md-input-container flex="30">
                                           <label>Occurrences</label>
-                                          <input class="input-text-width" name="occurrencesEdit" required ng-model=" selectedCoupon.noofoccurence" type="number" min="1" max="1000000" >
+                                          <input class="input-text-width" name="occurrencesEdit" required ng-model="vm.selectedCoupon.noofoccurence" type="number" min="1" max="1000000" >
                                           <div ng-messages="vm.couponEdit.occurrencesEdit.$error">
                                               <div ng-message="max">Occurrences must be between 1-7 digits</div>
                                               <div ng-message="min">Occurrences must be between 1-7 digits</div>
@@ -301,7 +303,7 @@
                                     <!--<div flex="5"></div>-->
                                     <!--<md-input-container flex="30">-->
                                       <!--<label>Coupon type</label>-->
-                                      <!--<md-select name="couponType" ng-required ng-model="selectedCoupon.coupontype">-->
+                                      <!--<md-select name="couponType" ng-required ng-model="vm.selectedCoupon.coupontype">-->
                                         <!--<md-option value="0">Promotion</md-option>-->
                                         <!--<md-option value="1">Coupon</md-option>-->
                                       <!--</md-select>-->
@@ -319,7 +321,7 @@
                                   <div layout="row">
                                       <md-input-container flex="30">
                                           <label>Discount type</label>
-                                          <md-select name="discountType" ng-required ng-model="selectedCoupon.discounttype">
+                                          <md-select name="discountType" ng-required ng-model="vm.selectedCoupon.discounttype">
                                               <md-option value="0">Flat</md-option>
                                               <md-option value="1">Percentage</md-option>
                                           </md-select>
@@ -328,10 +330,10 @@
                                   <div layout="row">
                                       <md-input-container flex="30">
                                           <label>Discount</label>
-                                          <input class="input-text-width" name="discountEdit" required ng-model="selectedCoupon.discountamount" type="number" min="1" max="{{selectedCoupon.discounttype == 0 ? 1000000 : 100}}">
+                                          <input class="input-text-width" name="discountEdit" required ng-model="vm.selectedCoupon.discountamount" type="number" min="1" max="{{vm.selectedCoupon.discounttype == 0 ? 1000000 : 100}}">
                                           <div ng-messages="vm.couponEdit.discountEdit.$error">
-                                              <div ng-message="max" ng-if="selectedCoupon.discounttype == 0">Discount must be between 1-7 digits</div>
-                                              <div ng-message="max" ng-if="selectedCoupon.discounttype == 1">Discount must be between 1-100</div>
+                                              <div ng-message="max" ng-if="vm.selectedCoupon.discounttype == 0">Discount must be between 1-7 digits</div>
+                                              <div ng-message="max" ng-if="vm.selectedCoupon.discounttype == 1">Discount must be between 1-100</div>
                                               <div ng-message="min">Discount can not be minus</div>
                                           </div>
                                       </md-input-container>
@@ -340,13 +342,13 @@
                                           <div layout="column" flex>
                                               <md-input-container class="mb-0">
                                                   <label>Redemption</label>
-                                                  <input ng-disabled="selectedCoupon.noRedemptionCount" class="input-text-width" name="redemptionEdit" required ng-model=" selectedCoupon.editedRedemption" type="number" min="1" max="1000000" >
-                                                  <div ng-messages="vm.couponEdit.redemptionEdit.$error" ng-if="!selectedCoupon.noRedemptionCount">
+                                                  <input ng-disabled="vm.selectedCoupon.noRedemptionCount" class="input-text-width" name="redemptionEdit" required ng-model=" vm.selectedCoupon.editedRedemption" type="number" min="1" max="1000000" >
+                                                  <div ng-messages="vm.couponEdit.redemptionEdit.$error" ng-if="!vm.selectedCoupon.noRedemptionCount">
                                                       <div ng-message="max">Redemption must be between 1-7 digits</div>
                                                       <div ng-message="min">Redemption must be between 1-7 digits</div>
                                                   </div>
                                               </md-input-container>
-                                              <md-checkbox ng-model="selectedCoupon.noRedemptionCount" id="noRedemptionCount" name="noRedemptionCount" aria-label="noRedemptionCount" class="md-primary dep-checkbox">Apply forever</md-checkbox>
+                                              <md-checkbox ng-model="vm.selectedCoupon.noRedemptionCount" id="noRedemptionCount" name="noRedemptionCount" aria-label="noRedemptionCount" class="md-primary dep-checkbox">Apply forever</md-checkbox>
                                           </div>
                                       </div>
                                   </div>
@@ -375,7 +377,7 @@
 
                                   <!--<div layout="row" layout-align="start center" style="height: 50px;">-->
                                       <!--<div layout="row" layout-align="start center">-->
-                                          <!--<md-checkbox ng-model="selectedCoupon.associateplan" id="applyToAll" name="applyToAll" aria-label="Apply to all" class="md-primary" style="margin: 0;">Apply to all</md-checkbox>-->
+                                          <!--<md-checkbox ng-model="vm.selectedCoupon.associateplan" id="applyToAll" name="applyToAll" aria-label="Apply to all" class="md-primary" style="margin: 0;">Apply to all</md-checkbox>-->
                                       <!--</div>-->
                                   <!--</div>-->
 
@@ -387,7 +389,7 @@
                                   <div class="b b-light" style="overflow: hidden;" >
                                       <div md-whiteframe="1dp" class="pos-rel" style="z-index: 1;">
                                           <div class="p-10 light-gray">
-                                              <md-checkbox ng-disabled="selectedCoupon.coupontype > 0" ng-model="selectedCoupon.associateplan" id="applyToAll" name="applyToAll" aria-label="Apply to all" class="md-primary m-0">Apply to all</md-checkbox>
+                                              <md-checkbox ng-disabled="vm.selectedCoupon.coupontype > 0" ng-model="vm.selectedCoupon.associateplan" id="applyToAll" name="applyToAll" aria-label="Apply to all" class="md-primary m-0">Apply to all</md-checkbox>
                                           </div>
                                       </div>
                                       <div class="msg-empty-list" ng-if="planList.length == 0">
@@ -395,15 +397,15 @@
                                             <md-icon md-font-icon="icon-information-outline"></md-icon> No plan has been created yet
                                         </span>
                                       </div>
-                                      <div class="msg-empty-list" ng-if="selectedCoupon.associateplan" layout="row" layout-align="center center">
+                                      <div class="msg-empty-list" ng-if="vm.selectedCoupon.associateplan" layout="row" layout-align="center center">
                                           <span>
                                               <md-icon md-font-icon="icon-information-outline"></md-icon> Coupon is entitled for all the plans
                                           </span>
                                       </div>
-                                      <md-content ms-scroll class="subheaded-list-content mh-352" flex ng-if="!selectedCoupon.associateplan">
+                                      <md-content ms-scroll class="subheaded-list-content mh-352" flex ng-if="!vm.selectedCoupon.associateplan">
                                           <div class="p-10" layout="row" ng-repeat="plan in planList">
                                               <span flex>
-                                                  <md-checkbox ng-disabled="selectedCoupon.coupontype > 0" ng-checked="couponPlan.indexOf(plan.guPlanID) > -1" ng-click="toggleSelection(plan.guPlanID)" name="selectedPlans[]" class="m-0 md-primary">{{plan.code}}</md-checkbox>
+                                                  <md-checkbox ng-disabled="vm.selectedCoupon.coupontype > 0" ng-checked="couponPlan.indexOf(plan.guPlanID) > -1" ng-click="toggleSelection(plan.guPlanID)" name="selectedPlans[]" class="m-0 md-primary">{{plan.code}}</md-checkbox>
                                               </span>
                                           </div>
                                       </md-content>
