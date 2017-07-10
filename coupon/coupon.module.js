@@ -1,8 +1,8 @@
 //////////////////////////////////////
 // App : Coupon
 // Owner  : Ishara Gunathilaka
-// Last changed date : 2017/07/04
-// Version : 6.1.0.8
+// Last changed date : 2017/07/10
+// Version : 6.1.0.9
 // Modified By : Kasun
 /////////////////////////////////
 
@@ -29,12 +29,24 @@
                     }
                 },
                 resolve: {
-                    security: ['$q','mesentitlement', function($q,mesentitlement){
-                        var entitledStatesReturn = mesentitlement.stateDepResolver('coupon');
+					security: ['$q','mesentitlement','$timeout','$rootScope','$state','$location', function($q,mesentitlement,$timeout,$rootScope,$state, $location){
+						return $q(function(resolve, reject) {
+							$timeout(function() {
+								if ($rootScope.isBaseSet2) {
+									resolve(function () {
+										var entitledStatesReturn = mesentitlement.stateDepResolver('coupon');
 
-                        if(entitledStatesReturn !== true){
-                              return $q.reject("unauthorized");
-                        };
+										mesentitlementProvider.setStateCheck("coupon");
+
+										if(entitledStatesReturn !== true){
+											return $q.reject("unauthorized");
+										}
+									});
+								} else {
+									return $location.path('/guide');
+								}
+							});
+						});
                     }]
                 },
                 bodyClass: 'coupon'
