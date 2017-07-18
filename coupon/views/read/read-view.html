@@ -300,7 +300,14 @@
                                 <div ng-message="maxlength">Code must be between 1-20 characters</div>
                             </div>
                         </md-input-container>
-                      <!--<div flex="5"></div>-->
+                      <div flex="5"></div>
+                      <md-input-container flex="30" ng-show="content.coupontype == 1">
+                        <label>Generate Coupon</label>
+                        <input ng-required="true" minlength="null"  md-maxlength="null" type="number" value="1" name="generateCoupon" ng-pattern="" ng-model="content.generateCoupon" ng-maxlength="20" min="1">
+                        <div ng-messages="vm.couponAdd.generateCoupon.$error">
+                          <div ng-message="maxlength">Number must be between 1-20 characters</div>
+                        </div>
+                      </md-input-container>
                     </div>
                     <div layout="row">
                         <md-input-container flex="30">
