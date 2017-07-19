@@ -130,12 +130,12 @@
                                       <span>Edit</span>
                                   </md-button>
                               </md-menu-item>
-                              <!--<md-menu-item>-->
-                                  <!--<md-button aria-label="Delete" ng-click="showDeactivatePlanConfirm($event,vm.selectedPlan)" ng-disabled="vm.selectedPlan.status == 'Inactive'">-->
-                                      <!--<md-icon md-font-icon="icon-close-circle"></md-icon>-->
-                                      <!--<span>Deactivate</span>-->
-                                  <!--</md-button>-->
-                              <!--</md-menu-item>-->
+                              <md-menu-item>
+                                  <md-button aria-label="Delete" ng-click="generateMoreCoupon(vm,vm.selectedCoupon)" ng-disabled="!editOff || vm.selectedCoupon.relatedcoupon != null || vm.selectedCoupon.coupontype === 0">
+                                      <md-icon md-font-icon="icon-close-circle"></md-icon>
+                                      <span>Generate more coupons</span>
+                                  </md-button>
+                              </md-menu-item>
                           </md-menu-content>
                       </md-menu>
                       <md-button class="md-icon-button" ng-click="switchInfoPane('close',vm.selectedPlan)">

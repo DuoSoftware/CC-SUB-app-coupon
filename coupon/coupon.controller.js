@@ -7,7 +7,7 @@
 		.controller('CouponController', CouponController);
 
 	/** @ngInject */
-	function CouponController($scope,  $timeout, $charge,notifications, $filter)
+	function CouponController($scope,  $timeout, $charge,notifications, $filter,$mdDialog)
 	{
 		var vm = this;
 
@@ -32,6 +32,7 @@
 		$scope.content={};
 		$scope.content.associateplan = true;
 		$scope.content.discounttype = "0"; // default selected 'flat'
+		$scope.content.generateCoupon = 0; // default set as 1
 		$scope.couponPlan = [];
 
 		//if(!$scope.NoEndDate)
@@ -299,6 +300,9 @@
 				if(!$scope.content.noRedemptionCount){
 					redemptionCount = $scope.content.couponRedemption;
 				}
+
+        var generateCount = $scope.content.generateCoupon;
+
 				// main table details and promo product details
 				$scope.content = {
 					"startdate": $scope.content.startdate,
@@ -312,6 +316,12 @@
 					"coupontype": $scope.content.coupontype
 				};
 
+        if(parseInt($scope.content.coupontype) === 1)
+        {
+          $scope.content.generateCount = generateCount;
+        }
+
+        $scope.content.isDirectFromInsert = "true";
 
 				if(!$scope.content.associateplan){
 					$scope.content.couponDetails=[];
@@ -608,7 +618,40 @@
 				promCont.scrollTop=0;
 
 			}
+
+
+
+
 		};
+
+    $scope.generateMoreCoupon = function(ev,coupon){
+
+      $mdDialog.show({
+        controller: 'autoGenerateCouponController',
+        templateUrl: 'app/main/coupon/dialogs/autoGenerateCoupon.html',
+        parent: angular.element(document.body),
+        targetEvent: ev,
+        clickOutsideToClose:false,
+        locals:{
+          coupon : coupon
+        }
+      })
+        .then(function(answer) {
+
+          $scope.skip=0; vm.coupons = [];$scope.content={};
+          vm.appInnerState = "default";
+          vm.addButtonDisplayText = "CREATE NEW";
+          // vm.couponAdd.$setDirty();
+          vm.couponAdd.$setPristine();
+          vm.couponAdd.$setUntouched();
+          vm.activePlanPaneIndex = 0;
+          $scope.loadCoupons();
+          $scope.isSaveClicked = false;
+
+        }, function() {
+
+        });
+    }
 
 		// toggle selection for a given fruit by name
 		$scope.toggleSelection = function toggleSelection(code) {

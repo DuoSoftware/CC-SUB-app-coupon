@@ -1,0 +1,41 @@
+<md-dialog class="prompt-dialog guided-payment" >
+    <md-toolbar>
+        <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
+            <div layout="row" layout-align="start center">
+                <md-icon md-font-icon="icon-login"></md-icon> <h3>Enter coupon amount</h3>
+            </div>
+            <md-button class="md-icon-button" ng-click="closeDialog()" aria-label="Close dialog">
+                <md-icon md-font-icon="icon-close"></md-icon>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+
+    <md-content class="p-16" ms-scroll>
+        <div layout="row">
+            <div class="form-portion" layout="column" >
+                <div md-whiteframe="3dp" flex class="p-10">
+                    <form name="couponCountForm" ng-submit="submitCouponCount()" flex novalidate>
+                        <div layout="column" layout-align="space-between start" fill-height>
+                            <md-input-container fill-width class="mb-0">
+                                <label>Coupon count</label>
+                                <input type="number" name="couponCount" required ng-model="couponCount" min="1"/>
+                                <div ng-messages="couponCountForm.couponCount.$error">
+                                    <div ng-message="required"></div>
+                                </div>
+                            </md-input-container>
+
+                            <div flex></div>
+
+                            <div layout="row" layout-align="end center" fill-width>
+                                <!--<md-button class="md-primary" ng-click="closeDialog()">Cancel</md-button>-->
+                                <md-button class="md-raised md-accent" type="submit">Submit</md-button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </md-content>
+
+</md-dialog>
