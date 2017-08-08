@@ -47,6 +47,8 @@
 
 		$scope.rows=[];
 
+		var tempEditCoupon = {};
+
 
 		//$charge.commondata().getDuobaseValuesByTableName("CTS_GeneralAttributes").success(function(data) {
 		//  $scope.decimalPoint=parseInt(data[6].RecordFieldData);
@@ -78,7 +80,7 @@
 			}else if(state=='close'){
 				if(!$scope.editOff){
 					// $scope.cancelEdit();
-					vm.selectedCoupon = vm.tempEditCoupon;
+					vm.selectedCoupon = tempEditCoupon;
 					$scope.editOff=true;
 				}else{
 					$scope.showInpageReadpane = false;
@@ -193,18 +195,17 @@
 					var stat = "Active";
 
 					if ( moment(data[i]["enddate"]).format('L') < moment(new Date().toISOString()).format('L')) {
-
 						stat = "Expired";
 						data[i].status = stat;
+						vm.coupons.push(data[i]);
 					}else if (data[i]["noofoccurence"] <= data[i]["currentuse"]) {
 						stat = "Expired";
 						data[i].status = stat;
+						vm.coupons.push(data[i]);
 					}else{
 						data[i].status = stat;
+						vm.coupons.push(data[i]);
 					}
-					vm.coupons.push(data[i]);
-
-
 				}
 
 				$scope.skip += $scope.take;
@@ -496,7 +497,7 @@
 
 		$scope.saveEdit = function(model)
 		{
-			var promCont = document.getElementById('editPromContainer');
+			// var promCont = document.getElementById('editPromContainer');
 
 			$scope.isSaveClicked = true;
 			//
@@ -511,7 +512,7 @@
 
 				return;
 			}
-			else  if(vm.selectedCoupon.noofoccurence < 0)
+			else if(vm.selectedCoupon.noofoccurence < 0)
 			{
 				$scope.isSaveClicked = false;
 				//notifications.toast('Occurrence count cannot be less than 0.','error');
@@ -553,8 +554,8 @@
 
 			editReq ={
 				"gucouponid":vm.selectedCoupon.gucouponid,
-				"startdate":vm.selectedCoupon.startdate,
-				"enddate":vm.selectedCoupon.enddate,
+				"startdate":$filter('date')(vm.selectedCoupon.startdate, 'dd-MM-yyyy'),
+				"enddate":$filter('date')(vm.selectedCoupon.enddate, 'dd-MM-yyyy'),
 				"couponcode":vm.selectedCoupon.couponcode,
 				"noofoccurence":vm.selectedCoupon.noofoccurence,
 				"associateplan": vm.selectedCoupon.associateplan ? 1 : 0,
@@ -588,9 +589,9 @@
 					vm.selectedCoupon.coupontype = parseInt(vm.selectedCoupon.coupontype);
 
 					editReq.associateplan = !editReq.associateplan;
-					editReq.redemptionUse = vm.selectedCoupon.redemptionUse;						//
-					editReq.currentuse = vm.selectedCoupon.currentuse;
-					editReq.coupontype = parseInt(vm.selectedCoupon.coupontype);
+					// editReq.redemptionUse = vm.selectedCoupon.redemptionUse;						//
+					// editReq.currentuse = vm.selectedCoupon.currentuse;
+					// editReq.coupontype = parseInt(vm.selectedCoupon.coupontype);
 					$scope.selectCoupon(editReq);
 
 					$scope.skip=0; vm.coupons = [];
@@ -643,18 +644,17 @@
 		$scope.toggleEdit = function (ctrlText, coupon) {
 			var promCont = document.getElementById('editPromContainer');
 
-			if($scope.editOff){
-				$scope.toggleControllText = 'VIEW COUPON';
-			}else{
-				$scope.toggleControllText = "EDIT COUPON";
-			}
+			// if($scope.editOff){
+			// 	$scope.toggleControllText = 'VIEW COUPON';
+			// }else{
+			// 	$scope.toggleControllText = "EDIT COUPON";
+			// }
 
 			if($scope.editOff==true)
 			{
-				vm.tempEditCoupon = angular.copy(coupon);
+				tempEditCoupon = angular.copy(coupon);
 				$scope.editOff = false;
 				promCont.scrollTop=0;
-
 			}
 			else
 			{
@@ -662,10 +662,6 @@
 				promCont.scrollTop=0;
 
 			}
-
-
-
-
 		};
 
     $scope.generateMoreCoupon = function(ev,coupon){
