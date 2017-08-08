@@ -407,6 +407,9 @@
 		}
 
 		$scope.isReadLoaded = true;
+		$scope.activeCoupon = {
+			couponcode:null
+		};
 
 		$scope.selectCoupon = function(coupon)
 		{
@@ -414,11 +417,12 @@
 
 			$scope.isReadLoaded = false;
 			$scope.editOff = true;
+			$scope.activeCoupon.couponcode = coupon.couponcode;
 
 			vm.selectedCoupon = {};
 
 			$scope.changeCoupon=coupon;
-			vm.selectedCoupon = coupon;
+			vm.selectedCoupon = angular.copy(coupon);
 			vm.selectedCoupon.editedRedemption = vm.selectedCoupon.redemption;
 
 			vm.selectedCoupon.noRedemptionCount = false;
@@ -501,10 +505,10 @@
 
 			$scope.isSaveClicked = true;
 			//
-			var editReq=vm.selectedCoupon;
+			var editReq=vm.editableCoupon;
 
 
-			if(moment(vm.selectedCoupon.enddate).format('L') < moment(vm.selectedCoupon.startdate).format('L'))
+			if(moment(vm.editableCoupon.enddate).format('L') < moment(vm.editableCoupon.startdate).format('L'))
 			{
 				$scope.isSaveClicked = false;
 				notifications.toast('End date should be greater than start date','error');
@@ -512,7 +516,7 @@
 
 				return;
 			}
-			else if(vm.selectedCoupon.noofoccurence < 0)
+			else if(vm.editableCoupon.noofoccurence < 0)
 			{
 				$scope.isSaveClicked = false;
 				//notifications.toast('Occurrence count cannot be less than 0.','error');
@@ -527,12 +531,12 @@
 				return;
 			}
 
-			if(parseInt(vm.selectedCoupon.coupontype) === 1)
+			if(parseInt(vm.editableCoupon.coupontype) === 1)
 			{
-				vm.selectedCoupon.associateplan = true;
+				vm.editableCoupon.associateplan = true;
 			}
 
-			if ((!vm.selectedCoupon.associateplan) ) {
+			if ((!vm.editableCoupon.associateplan) ) {
 
 				if ($scope.couponPlan.length < 1) {
 					$scope.isSaveClicked = false;
@@ -543,31 +547,31 @@
 
 			}
 
-			if(vm.selectedCoupon.noRedemptionCount)
+			if(vm.editableCoupon.noRedemptionCount)
 			{
-				vm.selectedCoupon.redemption = -999;
+				vm.editableCoupon.redemption = -999;
 			}else{
-				vm.selectedCoupon.redemption = vm.selectedCoupon.editedRedemption;
+				vm.editableCoupon.redemption = vm.selectedCoupon.editedRedemption;
 			}
 
 
 
 			editReq ={
-				"gucouponid":vm.selectedCoupon.gucouponid,
-				"startdate":$filter('date')(vm.selectedCoupon.startdate, 'dd-MM-yyyy'),
-				"enddate":$filter('date')(vm.selectedCoupon.enddate, 'dd-MM-yyyy'),
-				"couponcode":vm.selectedCoupon.couponcode,
-				"noofoccurence":vm.selectedCoupon.noofoccurence,
-				"associateplan": vm.selectedCoupon.associateplan ? 1 : 0,
-				"redemption":vm.selectedCoupon.redemption,
-				"discounttype":vm.selectedCoupon.discounttype,
-				"discountamount":vm.selectedCoupon.discountamount,
-				"coupontype":vm.selectedCoupon.coupontype
+				"gucouponid":vm.editableCoupon.gucouponid,
+				"startdate":$filter('date')(vm.editableCoupon.startdate, 'dd-MM-yyyy'),
+				"enddate":$filter('date')(vm.editableCoupon.enddate, 'dd-MM-yyyy'),
+				"couponcode":vm.editableCoupon.couponcode,
+				"noofoccurence":vm.editableCoupon.noofoccurence,
+				"associateplan": vm.editableCoupon.associateplan ? 1 : 0,
+				"redemption":vm.editableCoupon.redemption,
+				"discounttype":vm.editableCoupon.discounttype,
+				"discountamount":vm.editableCoupon.discountamount,
+				"coupontype":vm.editableCoupon.coupontype
 			}
 
 
 
-			if(!vm.selectedCoupon.associateplan){
+			if(!vm.editableCoupon.associateplan){
 				editReq.couponDetails=[];
 
 				for(var i =0;i<$scope.couponPlan.length;i++){
@@ -586,13 +590,13 @@
 
 					notifications.toast("Record Updated, coupon code " + editReq.couponcode, "success");
 
-					vm.selectedCoupon.coupontype = parseInt(vm.selectedCoupon.coupontype);
+					vm.editableCoupon.coupontype = parseInt(vm.editableCoupon.coupontype);
 
 					editReq.associateplan = !editReq.associateplan;
 					// editReq.redemptionUse = vm.selectedCoupon.redemptionUse;						//
 					// editReq.currentuse = vm.selectedCoupon.currentuse;
 					// editReq.coupontype = parseInt(vm.selectedCoupon.coupontype);
-					$scope.selectCoupon(editReq);
+					$scope.selectCoupon(vm.editableCoupon);
 
 					$scope.skip=0; vm.coupons = [];
 					$scope.loadCoupons();
@@ -627,6 +631,9 @@
 			vm.couponAdd.$setDirty;
 
 			$scope.editOff = true;
+			$timeout(function () {
+				vm.selectedCoupon = tempEditCoupon;
+			});
 			vm.activePlanPaneIndex = 0;
 
 			//vm.appInnerState = "add";
@@ -653,6 +660,7 @@
 			if($scope.editOff==true)
 			{
 				tempEditCoupon = angular.copy(coupon);
+				vm.editableCoupon = coupon;
 				$scope.editOff = false;
 				promCont.scrollTop=0;
 			}

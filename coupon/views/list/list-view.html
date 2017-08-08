@@ -7,7 +7,7 @@
 <div class="list-item" layout="row" layout-align="center center" flex ng-repeat="coupon in vm.coupons | filter: vm.search | filter: global.search"
      md-ink-ripple
      ng-click="switchInfoPane('show',coupon)"
-     ng-class="{'selected': selectedCoupon === coupon && showInpageReadpane}">
+     ng-class="{'selected': activeCoupon.couponcode === coupon.couponcode && showInpageReadpane}">
 
     <div layout="row" layout-align="center center" flex>
 

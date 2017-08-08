@@ -267,9 +267,9 @@
                               <md-card-content>
                                   <div layout="row" layout-align="center center">
                                       <md-input-container>
-                                          <md-radio-group name="couponType" ng-required ng-model="vm.selectedCoupon.coupontype" layout="row" class="cc-switch-buttons-group">
-                                              <md-radio-button value="0" class="cc-switch-buttons" md-ink-ripple ng-disabled="vm.selectedCoupon.coupontype == 0" ng-style="vm.selectedCoupon.coupontype == 1 ? {'z-index':'1'} : {'z-index':'0'}">Promotion</md-radio-button>
-                                              <md-radio-button value="1" class="cc-switch-buttons" md-ink-ripple ng-disabled="vm.selectedCoupon.coupontype == 1" ng-style="vm.selectedCoupon.coupontype == 0 ? {'z-index':'1'} : {'z-index':'0'}">Coupon</md-radio-button>
+                                          <md-radio-group name="couponType" ng-required ng-model="vm.editableCoupon.coupontype" layout="row" class="cc-switch-buttons-group">
+                                              <md-radio-button value="0" class="cc-switch-buttons" md-ink-ripple ng-disabled="vm.editableCoupon.coupontype == 0" ng-style="vm.editableCoupon.coupontype == 1 ? {'z-index':'1'} : {'z-index':'0'}">Promotion</md-radio-button>
+                                              <md-radio-button value="1" class="cc-switch-buttons" md-ink-ripple ng-disabled="vm.editableCoupon.coupontype == 1" ng-style="vm.editableCoupon.coupontype == 0 ? {'z-index':'1'} : {'z-index':'0'}">Coupon</md-radio-button>
                                           </md-radio-group>
                                       </md-input-container>
                                   </div>
@@ -277,25 +277,25 @@
                                       <div layout="row" layout-align="start center" flex="30" class="state-capsule">
                                           <div layout="row">
                                               <span>Coupon code</span>
-                                              <span>{{vm.selectedCoupon.couponcode}}</span>
+                                              <span>{{vm.editableCoupon.couponcode}}</span>
                                           </div>
                                       </div>
                                   </div>
                                   <div layout="row">
                                       <md-input-container flex="30">
                                           <label>Start Date</label>
-                                          <md-datepicker ng-model="vm.selectedCoupon.startdate" md-placeholder="Start date" ng-hide="editOff"></md-datepicker>
+                                          <md-datepicker ng-model="vm.editableCoupon.startdate" md-placeholder="Start date" ng-hide="editOff"></md-datepicker>
                                       </md-input-container>
                                       <div flex="5"></div>
                                       <md-input-container flex="30">
                                           <label>End Date</label>
-                                          <md-datepicker ng-model="vm.selectedCoupon.enddate" md-placeholder="End date" ng-disabled="NoEndDate"></md-datepicker>
+                                          <md-datepicker ng-model="vm.editableCoupon.enddate" md-placeholder="End date" ng-disabled="NoEndDate"></md-datepicker>
                                       </md-input-container>
                                   </div>
                                   <div layout="row">
                                       <md-input-container flex="30">
                                           <label>Occurrences</label>
-                                          <input class="input-text-width" name="occurrencesEdit" required ng-model="vm.selectedCoupon.noofoccurence" type="number" min="1" max="1000000" >
+                                          <input class="input-text-width" name="occurrencesEdit" required ng-model="vm.editableCoupon.noofoccurence" type="number" min="1" max="1000000" >
                                           <div ng-messages="vm.couponEdit.occurrencesEdit.$error">
                                               <div ng-message="max">Occurrences must be between 1-7 digits</div>
                                               <div ng-message="min">Occurrences must be between 1-7 digits</div>
@@ -322,7 +322,7 @@
                                   <div layout="row">
                                       <md-input-container flex="30">
                                           <label>Discount type</label>
-                                          <md-select name="discountType" ng-required ng-model="vm.selectedCoupon.discounttype">
+                                          <md-select name="discountType" ng-required ng-model="vm.editableCoupon.discounttype">
                                               <md-option value="0">Flat</md-option>
                                               <md-option value="1">Percentage</md-option>
                                           </md-select>
@@ -331,10 +331,10 @@
                                   <div layout="row">
                                       <md-input-container flex="30">
                                           <label>Discount</label>
-                                          <input class="input-text-width" name="discountEdit" required ng-model="vm.selectedCoupon.discountamount" type="number" min="1" max="{{vm.selectedCoupon.discounttype == 0 ? 1000000 : 100}}">
+                                          <input class="input-text-width" name="discountEdit" required ng-model="vm.editableCoupon.discountamount" type="number" min="1" max="{{vm.editableCoupon.discounttype == 0 ? 1000000 : 100}}">
                                           <div ng-messages="vm.couponEdit.discountEdit.$error">
-                                              <div ng-message="max" ng-if="vm.selectedCoupon.discounttype == 0">Discount must be between 1-7 digits</div>
-                                              <div ng-message="max" ng-if="vm.selectedCoupon.discounttype == 1">Discount must be between 1-100</div>
+                                              <div ng-message="max" ng-if="vm.editableCoupon.discounttype == 0">Discount must be between 1-7 digits</div>
+                                              <div ng-message="max" ng-if="vm.editableCoupon.discounttype == 1">Discount must be between 1-100</div>
                                               <div ng-message="min">Discount can not be minus</div>
                                           </div>
                                       </md-input-container>
@@ -343,13 +343,13 @@
                                           <div layout="column" flex>
                                               <md-input-container class="mb-0">
                                                   <label>Redemption</label>
-                                                  <input ng-disabled="vm.selectedCoupon.noRedemptionCount" class="input-text-width" name="redemptionEdit" required ng-model=" vm.selectedCoupon.editedRedemption" type="number" min="1" max="1000000" >
-                                                  <div ng-messages="vm.couponEdit.redemptionEdit.$error" ng-if="!vm.selectedCoupon.noRedemptionCount">
+                                                  <input ng-disabled="vm.editableCoupon.noRedemptionCount" class="input-text-width" name="redemptionEdit" required ng-model="vm.editableCoupon.editedRedemption" type="number" min="1" max="1000000" >
+                                                  <div ng-messages="vm.couponEdit.redemptionEdit.$error" ng-if="!vm.editableCoupon.noRedemptionCount">
                                                       <div ng-message="max">Redemption must be between 1-7 digits</div>
                                                       <div ng-message="min">Redemption must be between 1-7 digits</div>
                                                   </div>
                                               </md-input-container>
-                                              <md-checkbox ng-model="vm.selectedCoupon.noRedemptionCount" id="noRedemptionCount" name="noRedemptionCount" aria-label="noRedemptionCount" class="md-primary dep-checkbox">Apply forever</md-checkbox>
+                                              <md-checkbox ng-model="vm.editableCoupon.noRedemptionCount" id="noRedemptionCount" name="noRedemptionCount" aria-label="noRedemptionCount" class="md-primary dep-checkbox">Apply forever</md-checkbox>
                                           </div>
                                       </div>
                                   </div>
@@ -390,7 +390,7 @@
                                   <div class="b b-light" style="overflow: hidden;" >
                                       <div md-whiteframe="1dp" class="pos-rel" style="z-index: 1;">
                                           <div class="p-10 light-gray">
-                                              <md-checkbox ng-disabled="vm.selectedCoupon.coupontype > 0" ng-model="vm.selectedCoupon.associateplan" id="applyToAll" name="applyToAll" aria-label="Apply to all" class="md-primary m-0">Apply to all</md-checkbox>
+                                              <md-checkbox ng-disabled="vm.editableCoupon.coupontype > 0" ng-model="vm.editableCoupon.associateplan" id="applyToAll" name="applyToAll" aria-label="Apply to all" class="md-primary m-0">Apply to all</md-checkbox>
                                           </div>
                                       </div>
                                       <div class="msg-empty-list" ng-if="planList.length == 0">
@@ -398,15 +398,15 @@
                                             <md-icon md-font-icon="icon-information-outline"></md-icon> No plan has been created yet
                                         </span>
                                       </div>
-                                      <div class="msg-empty-list" ng-if="planList.length > 0 && vm.selectedCoupon.associateplan" layout="row" layout-align="center center">
+                                      <div class="msg-empty-list" ng-if="planList.length > 0 && vm.editableCoupon.associateplan" layout="row" layout-align="center center">
                                           <span>
                                               <md-icon md-font-icon="icon-information-outline"></md-icon> Coupon is entitled for all the plans
                                           </span>
                                       </div>
-                                      <md-content ms-scroll class="subheaded-list-content mh-352" flex ng-if="!vm.selectedCoupon.associateplan">
+                                      <md-content ms-scroll class="subheaded-list-content mh-352" flex ng-if="!vm.editableCoupon.associateplan">
                                           <div class="p-10" layout="row" ng-repeat="plan in planList">
                                               <span flex>
-                                                  <md-checkbox ng-disabled="vm.selectedCoupon.coupontype > 0" ng-checked="couponPlan.indexOf(plan.guPlanID) > -1" ng-click="toggleSelection(plan.guPlanID)" name="selectedPlans[]" class="m-0 md-primary">{{plan.code}}</md-checkbox>
+                                                  <md-checkbox ng-disabled="vm.editableCoupon.coupontype > 0" ng-checked="couponPlan.indexOf(plan.guPlanID) > -1" ng-click="toggleSelection(plan.guPlanID)" name="selectedPlans[]" class="m-0 md-primary">{{plan.code}}</md-checkbox>
                                               </span>
                                           </div>
                                       </md-content>
