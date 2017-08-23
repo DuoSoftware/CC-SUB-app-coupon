@@ -208,6 +208,7 @@
       try{
 
         if(keyword.length > 2) {
+          vm.coupons=[];
           vm.listLoaded = false;
           $charge.coupon().GetcouponsForKeyword(0, 1000, keyword).success(function (data) {
             // console.log(data);
@@ -246,7 +247,8 @@
             $scope.showMoreButton = false;
             // console.log(data);
           })
-        }else{
+        }
+        else if(keyword.length === 0){
           $scope.skip = 0;
           vm.coupons = [];
           $scope.loadCoupons();
