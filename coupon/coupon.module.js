@@ -8,25 +8,25 @@
 
 (function ()
 {
-    'use strict';
+	'use strict';
 
-    angular
-        .module('app.coupon', [])
-        .config(config);
+	angular
+		.module('app.coupon', [])
+		.config(config);
 
-    /** @ngInject */
-    function config($stateProvider, msNavigationServiceProvider, mesentitlementProvider)
-    {
-        $stateProvider
-            .state('app.coupon', {
-                url    : '/coupon',
-                views  : {
-                    'coupon@app': {
-                        templateUrl: 'app/main/coupon/coupon.html',
-                        controller : 'CouponController as vm'
-                    }
-                },
-                resolve: {
+	/** @ngInject */
+	function config($stateProvider, msNavigationServiceProvider, mesentitlementProvider)
+	{
+		$stateProvider
+			.state('app.coupon', {
+				url    : '/coupon',
+				views  : {
+					'coupon@app': {
+						templateUrl: 'app/main/coupon/coupon.html',
+						controller : 'CouponController as vm'
+					}
+				},
+				resolve: {
 					security: ['$q','mesentitlement','$timeout','$rootScope','$state','$location', function($q,mesentitlement,$timeout,$rootScope,$state, $location){
 						return $q(function(resolve, reject) {
 							$timeout(function() {
@@ -45,17 +45,15 @@
 								}
 							});
 						});
-                    }]
-                },
-                bodyClass: 'coupon'
-            });
+					}]
+				},
+				bodyClass: 'coupon'
+			});
 
-        if(isSuperAdmin != 'true'){
-            msNavigationServiceProvider.saveItem('coupon', {
-                title    : 'Coupon',
-                state    : 'app.coupon',
-                weight   : 11
-            });
-        };
-    }
+		msNavigationServiceProvider.saveItem('coupon', {
+			title    : 'Coupon',
+			state    : 'app.coupon',
+			weight   : 11
+		});
+	}
 })();
