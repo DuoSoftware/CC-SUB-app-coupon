@@ -53,7 +53,7 @@
 		msNavigationServiceProvider.saveItem('coupon', {
 			title    : 'Coupon',
 			state    : 'app.coupon',
-			weight   : 7
+			weight   : 9
 		});
 	}
 })();
