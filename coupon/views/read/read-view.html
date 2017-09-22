@@ -108,34 +108,14 @@
             </md-card>
             <md-card flex class="input-block-gen">
                 <md-card-title>
-                    <div layout="row" layout-align="start center">
+                    <div layout="row" layout-align="start center" ng-if="issubscriptionappuse">
                         <md-icon md-font-icon="icon-map"></md-icon> <h3>Entitled plans</h3>
                     </div>
+                  <div layout="row" layout-align="start center" ng-if="!issubscriptionappuse">
+                    <md-icon md-font-icon="icon-map"></md-icon> <h3>Entitled products</h3>
+                  </div>
                 </md-card-title>
                 <md-card-content md-whiteframe="1dp">
-
-                    <!--<div class="prod-row-wrap" ng-repeat="plan in planList.slice().reverse()">-->
-                    <!--&lt;!&ndash;<md-card layout="row" id="divId" class="add-item-row"  md-whiteframe="1dp">&ndash;&gt;-->
-
-                    <!--<div layout="column" layout-align="center center" style="float: left;width: 200px">-->
-                    <!--<md-checkbox id="plan.guPlanID" ng-checked="couponPlan.indexOf(plan.guPlanID) === 0" name="plan.guPlanID" ng-click="selectPlan(plan.guPlanID)">{{plan.name}}-->
-                    <!--<p>Code : {{plan.code}}</p>-->
-                    <!--<p>Price : $ {{plan.unitPrice}}</p>-->
-                    <!--</md-checkbox>-->
-
-                    <!--</div>-->
-                    <!--&lt;!&ndash;</md-card>&ndash;&gt;-->
-                    <!--</div>-->
-
-                    <!--<div layout="row" layout-align="start center" style="height: 50px;">-->
-                    <!--<div layout="row" layout-align="start center">-->
-                    <!--<md-checkbox ng-model="selectedCoupon.associateplan" id="applyToAll" name="applyToAll" aria-label="Apply to all" class="md-primary" style="margin: 0;">Apply to all</md-checkbox>-->
-                    <!--</div>-->
-                    <!--</div>-->
-
-                    <!--<label ng-repeat="plan in planList" class="checkbox-inline">-->
-                    <!--<input type="checkbox" name="selectedPlans[]" value="{{plan.guPlanID}}" ng-checked="couponPlan.indexOf(plan.guPlanID) > -1" ng-click="toggleSelection(plan.guPlanID)"> {{plan.code}}-->
-                    <!--</label>-->
 
                     <div class="b b-light" style="overflow: hidden;">
                         <div md-whiteframe="1dp" class="pos-rel" style="z-index: 1;">
@@ -143,20 +123,26 @@
                                 <md-checkbox ng-disabled="content.coupontype > 0" ng-model="content.associateplan" id="applyToAll" name="applyToAll" aria-label="Apply to all" class="md-primary m-0">Apply to all</md-checkbox>
                             </div>
                         </div>
-                        <div class="msg-empty-list" ng-if="planList.length == 0">
-                            <span>
+                        <div class="msg-empty-list" ng-if="detailList.length == 0">
+                            <span ng-if="issubscriptionappuse">
                                 <md-icon md-font-icon="icon-information-outline"></md-icon> No plan has been created yet
                             </span>
+                          <span ng-if="!issubscriptionappuse">
+                                <md-icon md-font-icon="icon-information-outline"></md-icon> No product has been created yet
+                            </span>
                         </div>
-                        <div class="msg-empty-list" ng-if="planList.length > 0 && content.associateplan" layout="row" layout-align="center center">
-                            <span>
+                        <div class="msg-empty-list" ng-if="detailList.length > 0 && content.associateplan" layout="row" layout-align="center center">
+                            <span ng-if="issubscriptionappuse">
                                 <md-icon md-font-icon="icon-information-outline"></md-icon> Coupon is entitled for all the plans
+                            </span>
+                           <span ng-if="!issubscriptionappuse">
+                                <md-icon md-font-icon="icon-information-outline"></md-icon> Coupon is entitled for all the products
                             </span>
                         </div>
                         <md-content ms-scroll class="subheaded-list-content mh-352" flex ng-if="!content.associateplan">
-                            <div class="p-10" layout="row" ng-repeat="plan in planList">
+                            <div class="p-10" layout="row" ng-repeat="detail in detailList">
                                 <span flex>
-                                    <md-checkbox ng-disabled="content.coupontype > 0" ng-checked="couponPlan.indexOf(plan.guPlanID) > -1" ng-click="toggleSelection(plan.guPlanID)" name="selectedPlans[]" class="m-0 md-primary">{{plan.code}}</md-checkbox>
+                                    <md-checkbox ng-disabled="content.coupontype > 0" ng-checked="couponDetail.indexOf(detail.detailId) > -1" ng-click="toggleSelection(detail.detailId)" name="selectedPlans[]" class="m-0 md-primary">{{detail.code}}</md-checkbox>
                                 </span>
                             </div>
                         </md-content>

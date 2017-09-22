@@ -29,11 +29,20 @@
 
 		vm.addButtonDisplayText = "CREATE NEW";
 
+//////////////
+    /////////
+    //////// // application use for invoice or subscription
+    ///////
+    //////////////
+
+    $scope.issubscriptionappuse = false;//"invoice";
+
+
 		$scope.content={};
 		$scope.content.associateplan = true;
 		$scope.content.discounttype = "0"; // default selected 'flat'
 		$scope.content.generateCoupon = 0; // default set as 1
-		$scope.couponPlan = [];
+		$scope.couponDetail = [];
 
 		//if(!$scope.NoEndDate)
 		//  $scope.NoEndDate = false;
@@ -320,38 +329,70 @@
 
 		}
 
+    $scope.detailList = [];
+  if($scope.issubscriptionappuse) {
+      $scope.loadPlans = function () {
 
-		$scope.planList = [];
-		$scope.loadPlans = function() {
-
-      try{
-          vm.listPlanLoaded = false;
+        try {
+          vm.listDetailLoaded = false;
 
           $charge.plan().allPlans($scope.skip, $scope.take, "desc").success(function (data) {
             // console.log(data);
             for (var i = 0; i < data.length; i++) {
-
-              $scope.planList.push(data[i]);
+                data[i].detailId = data[i].guPlanID;
+              $scope.detailList.push(data[i]);
             }
 
-            vm.listPlanLoaded = true;
+            vm.listDetailLoaded = true;
 
             // $scope.isLoading = false;
           }).error(function (data) {
-            vm.listPlanLoaded = true;
+            vm.listDetailLoaded = true;
             // console.log(data);
           })
 
-      }catch(ex){
+        } catch (ex) {
+          ex.app = "coupon";
+          logHelper.error(ex);
+
+          vm.listDetailLoaded = true;
+        }
+
+      }
+
+      $scope.loadPlans();
+  }else{
+    $scope.loadPlans = function () {
+
+      try {
+        vm.listDetailLoaded = false;
+
+        $charge.product().all($scope.skip, $scope.take, "desc").success(function (data) {
+          // console.log(data);
+          for (var i = 0; i < data.length; i++) {
+            data[i].detailId = data[i].guproductID;
+            $scope.detailList.push(data[i]);
+          }
+
+          vm.listDetailLoaded = true;
+
+          // $scope.isLoading = false;
+        }).error(function (data) {
+          vm.listDetailLoaded = true;
+          // console.log(data);
+        })
+
+      } catch (ex) {
         ex.app = "coupon";
         logHelper.error(ex);
 
-        vm.listPlanLoaded = true;
+        vm.listDetailLoaded = true;
       }
 
-		}
+    }
 
-		$scope.loadPlans();
+    $scope.loadPlans();
+  }
 
 
 		$scope.isSaveClicked = false;
@@ -393,7 +434,7 @@
 
             if ((!$scope.content.associateplan) ) {
 
-              if ($scope.couponPlan.length < 1) {
+              if ($scope.couponDetail.length < 1) {
                 $scope.isSaveClicked = false;
                 // notifications.toast('Please add coupon products.');
                 notifications.toast('Please select plan(s).', 'error');
@@ -418,7 +459,8 @@
               "redemption": redemptionCount,
               "discounttype": $scope.content.discounttype,
               "discountamount": $scope.content.couponDiscount,
-              "coupontype": $scope.content.coupontype
+              "coupontype": $scope.content.coupontype,
+              "issubscription" : $scope.issubscriptionappuse   // if app been use for subscription this is true
             };
 
             if(parseInt($scope.content.coupontype) === 1)
@@ -431,8 +473,8 @@
             if(!$scope.content.associateplan){
               $scope.content.couponDetails=[];
 
-              for(var i =0;i<$scope.couponPlan.length;i++){
-                $scope.content.couponDetails.push({"guplanid" : $scope.couponPlan[i]});
+              for(var i =0;i<$scope.couponDetail.length;i++){
+                $scope.content.couponDetails.push({"guDetailid" : $scope.couponDetail[i]});
               }
 
             }
@@ -567,20 +609,19 @@
             vm.scrollEl.scrollTop(0);
           });
 
-          $scope.couponPlan = [];
+          $scope.couponDetail = [];
 
           if(!vm.selectedCoupon.associateplan) {
             $charge.coupon().getDetailsByCouponId(coupon.gucouponid).success(function (data) {
-
               // console.log(data);
 
               for (var i = 0; i < data.length; i++) {
-                $scope.couponPlan.push(data[i].guplanid);
+                $scope.couponDetail.push(data[i].guDetailid);
               }
 
               $scope.isReadLoaded = true;
             }).error(function (data) {
-              $scope.couponPlan = [];
+              $scope.couponDetail = [];
               // console.log(data);
               $scope.isReadLoaded = true;
             })
@@ -599,7 +640,7 @@
                        console.log(data);
 
                       //for (var i = 0; i < data.length; i++) {
-                      //  $scope.couponPlan.push(data[i].guplanid);
+                      //  $scope.couponDetail.push(data[i].guDetailid);
                       //}
 
                     }).error(function (data) {
@@ -652,7 +693,7 @@
 
             if ((!vm.editableCoupon.associateplan) ) {
 
-              if ($scope.couponPlan.length < 1) {
+              if ($scope.couponDetail.length < 1) {
                 $scope.isSaveClicked = false;
                 // notifications.toast('Please add coupon products.');
                 notifications.toast('Please select plan(s).', 'error');
@@ -680,14 +721,15 @@
               "redemption":vm.editableCoupon.redemption,
               "discounttype":vm.editableCoupon.discounttype,
               "discountamount":vm.editableCoupon.discountamount,
-              "coupontype":vm.editableCoupon.coupontype
+              "coupontype":vm.editableCoupon.coupontype,
+              "issubscription" : $scope.issubscriptionappuse    // if app been use for subscription this is true
             }
 
             if(!vm.editableCoupon.associateplan){
               editReq.couponDetails=[];
 
-              for(var i =0;i<$scope.couponPlan.length;i++){
-                editReq.couponDetails.push({"guplanid" : $scope.couponPlan[i]});
+              for(var i =0;i<$scope.couponDetail.length;i++){
+                editReq.couponDetails.push({"guDetailid" : $scope.couponDetail[i]});
               }
 
             }
@@ -739,7 +781,7 @@
 			$scope.editOff = true;
 			$scope.content.coupontype = 0;
 			vm.activePlanPaneIndex = 1;
-			$scope.couponPlan=[];
+			$scope.couponDetail=[];
 			$scope.showInpageReadpane = false;
 		}
 
@@ -827,16 +869,16 @@
 		$scope.toggleSelection = function toggleSelection(code) {
 
       try{
-          var idx = $scope.couponPlan.indexOf(code);
+          var idx = $scope.couponDetail.indexOf(code);
 
           // is currently selected
           if (idx > -1) {
-            $scope.couponPlan.splice(idx, 1);
+            $scope.couponDetail.splice(idx, 1);
           }
 
           // is newly selected
           else {
-            $scope.couponPlan.push(code);
+            $scope.couponDetail.push(code);
           }
       }catch(ex){
         ex.app = "coupon";
