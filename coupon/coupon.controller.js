@@ -460,7 +460,7 @@
               "discounttype": $scope.content.discounttype,
               "discountamount": $scope.content.couponDiscount,
               "coupontype": $scope.content.coupontype,
-              "issubscription" : $scope.issubscriptionappuse   // if app been use for subscription this is true
+              "issubscription" : $scope.issubscriptionappuse ? "1" : "0"   // if app been use for subscription this is true
             };
 
             if(parseInt($scope.content.coupontype) === 1)
@@ -722,7 +722,7 @@
               "discounttype":vm.editableCoupon.discounttype,
               "discountamount":vm.editableCoupon.discountamount,
               "coupontype":vm.editableCoupon.coupontype,
-              "issubscription" : $scope.issubscriptionappuse    // if app been use for subscription this is true
+              "issubscription" : $scope.issubscriptionappuse ? "1" : "0"    // if app been use for subscription this is true
             }
 
             if(!vm.editableCoupon.associateplan){
