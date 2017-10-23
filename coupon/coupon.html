@@ -41,7 +41,9 @@
                           <input ng-disabled="vm.activePlanPaneIndex == 1" flex ng-model="vm.search" type="text" ng-keypress="searchKeyPress($event,vm.search,vm.search.length)" ng-change="loadByKeywordCoupon(vm.search)" placeholder="Search for coupons">
                       </div>
                   </div>
-                  <md-button class="md-raised md-accent main-app-create" layout="row" layout-align="center center" aria-label="compose" ng-disabled="vm.activePlanPaneIndex == 1" ng-click="toggleReadPane()" ng-if="!inpageReadPaneEdit"><span class="fs-18 mr-10">+</span> NEW
+                  <md-button class="md-raised md-accent main-app-create" layout="row" layout-align="center center" aria-label="compose" ng-disabled="vm.activePlanPaneIndex == 1" ng-click="toggleReadPane(0)" ng-if="!inpageReadPaneEdit"><span class="fs-18 mr-10">+</span> NEW PROMOTION
+                  </md-button>
+                  <md-button class="md-raised md-accent main-app-create" layout="row" layout-align="center center" aria-label="compose" ng-disabled="vm.activePlanPaneIndex == 1" ng-click="toggleReadPane(1)" ng-if="!inpageReadPaneEdit"><span class="fs-18 mr-10">+</span> NEW COUPON
                   </md-button>
               </div>
           </div>
@@ -269,12 +271,16 @@
                               </md-card-title>
                               <md-card-content>
                                   <div layout="row" layout-align="center center">
-                                      <md-input-container>
-                                          <md-radio-group name="couponType" ng-required ng-model="vm.editableCoupon.coupontype" layout="row" class="cc-switch-buttons-group">
-                                              <md-radio-button value="0" class="cc-switch-buttons" md-ink-ripple ng-disabled="vm.editableCoupon.coupontype == 0" ng-style="vm.editableCoupon.coupontype == 1 ? {'z-index':'1'} : {'z-index':'0'}">Promotion</md-radio-button>
-                                              <md-radio-button value="1" class="cc-switch-buttons" md-ink-ripple ng-disabled="vm.editableCoupon.coupontype == 1" ng-style="vm.editableCoupon.coupontype == 0 ? {'z-index':'1'} : {'z-index':'0'}">Coupon</md-radio-button>
-                                          </md-radio-group>
-                                      </md-input-container>
+                                      <!--<md-input-container>-->
+                                          <!--<md-radio-group name="couponType" ng-required ng-model="vm.editableCoupon.coupontype" layout="row" class="cc-switch-buttons-group">-->
+                                              <!--<md-radio-button value="0" class="cc-switch-buttons" md-ink-ripple ng-disabled="vm.editableCoupon.coupontype == 0" ng-style="vm.editableCoupon.coupontype == 1 ? {'z-index':'1'} : {'z-index':'0'}">Promotion</md-radio-button>-->
+                                              <!--<md-radio-button value="1" class="cc-switch-buttons" md-ink-ripple ng-disabled="vm.editableCoupon.coupontype == 1" ng-style="vm.editableCoupon.coupontype == 0 ? {'z-index':'1'} : {'z-index':'0'}">Coupon</md-radio-button>-->
+                                          <!--</md-radio-group>-->
+                                      <!--</md-input-container>-->
+                                    <div flex>
+                                      <span class="iconed-label"><span>Coupon category</span></span>
+                                      <span class="secondary-state-capsule">{{vm.editableCoupon.coupontype === 0 ? 'Promotion' : 'Coupon'}}</span>
+                                    </div>
                                   </div>
                                   <div layout="row">
                                       <div layout="row" layout-align="start center" flex="30" class="state-capsule">

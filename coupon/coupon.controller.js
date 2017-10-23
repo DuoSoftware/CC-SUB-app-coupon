@@ -67,7 +67,7 @@
 		$scope.isSpinnerShown = true;
 		$scope.content.startdate = new Date();
 		$scope.content.enddate=new Date();
-		$scope.content.coupontype=0;
+		$scope.content.coupontype=0; // default is 'promotion'
 
 		$scope.currentDate = moment(new Date().toISOString()).format('LL');
 
@@ -794,9 +794,10 @@
 
 		}
 
-		$scope.toggleReadPane = function () {
+    // here parameter is the type of the couponType, 0 is promotion,  1 is coupon
+		$scope.toggleReadPane = function (type) {
 			$scope.editOff = true;
-			$scope.content.coupontype = 0;
+			$scope.content.coupontype = type;
 			vm.activePlanPaneIndex = 1;
 			$scope.couponDetail=[];
 			$scope.showInpageReadpane = false;
