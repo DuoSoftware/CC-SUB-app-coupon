@@ -285,7 +285,8 @@
                                   <div layout="row">
                                       <div layout="row" layout-align="start center" flex="30" class="state-capsule">
                                           <div layout="row">
-                                              <span>Coupon code</span>
+                                              <span ng-show="vm.editableCoupon.coupontype === 1">Coupon code</span>
+                                              <span ng-show="vm.editableCoupon.coupontype != 1">Promo code</span>
                                               <span>{{vm.editableCoupon.couponcode}}</span>
                                           </div>
                                       </div>

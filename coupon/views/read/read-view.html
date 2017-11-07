@@ -29,14 +29,15 @@
                     </div>
                     <div layout="row">
                         <md-input-container flex="30">
-                            <label>Coupon Code</label>
+                            <label ng-show="content.coupontype === 1">Coupon Code</label>
+                            <label ng-show="content.coupontype != 1">Promotion Code</label>
                             <input ng-required="true" minlength="null"  md-maxlength="null" type="" name="couponCode" ng-pattern="" ng-model="content.couponcode" ng-maxlength="20">
                             <div ng-messages="vm.couponAdd.couponCode.$error">
                                 <div ng-message="maxlength">Code must be between 1-20 characters</div>
                             </div>
                         </md-input-container>
                       <div flex="5"></div>
-                      <md-input-container flex="30" ng-show="content.coupontype == 1">
+                      <md-input-container flex="30" ng-show="content.coupontype === 1">
                         <label>Generate more coupons</label>
                         <input minlength="null"  md-maxlength="null" type="number" id="generateCoupon" name="generateCoupon" ng-pattern="" ng-model="content.generateCoupon" ng-maxlength="20" min="0">
                         <!--<div ng-messages="vm.couponAdd.generateCoupon.$error">-->
