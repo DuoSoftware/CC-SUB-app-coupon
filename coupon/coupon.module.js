@@ -1,8 +1,8 @@
 //////////////////////////////////////
 // App : Coupon
 // Owner  : Ishara Gunathilaka
-// Last changed date : 2017/11/30
-// Version : 6.1.0.17
+// Last changed date : 2018/02/12
+// Version : 6.1.0.18
 // Modified By : Kasun
 /////////////////////////////////
 
